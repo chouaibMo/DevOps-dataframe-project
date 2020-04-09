@@ -23,18 +23,22 @@ public class DataframeTest {
     
     @BeforeClass
     public static void setUpClass() {
+        System.out.println("BeforeClass");
     }
     
     @AfterClass
     public static void tearDownClass() {
+        System.out.println("SetUp");
     }
     
     @Before
     public void setUp() {
+        System.out.println("Before");
     }
     
     @After
     public void tearDown() {
+        System.out.println("After");
     }
 
     /**
@@ -42,8 +46,8 @@ public class DataframeTest {
      */
     @Test
     public void testMain() {
-       /* System.out.println("main");
-        String[] args = null;
+        System.out.println("main");
+        /*String[] args = null;
         Dataframe.main(args);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");*/
