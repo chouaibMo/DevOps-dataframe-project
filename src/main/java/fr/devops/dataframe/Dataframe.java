@@ -5,18 +5,51 @@
  */
 package fr.devops.dataframe;
 
+import fr.devops.operations.Function;
+
 /**
  *
  * @author chouaib
  */
-public class Dataframe {
+public class Dataframe implements Dataframe_itf{
+    
     
     public Dataframe(){
         System.out.println("create dataframe");
     }
     
-    public static void main(String[] args) {
-        System.out.println("init project");
-        System.out.println("java version :"+System.getProperty("java.version"));
+    public Dataframe(String filename){
+        System.out.println("create dataframe");
     }
+
+    @Override
+    public int size() {
+        throw new UnsupportedOperationException("Not supported yet."); 
+        //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void fetchAll() {
+        throw new UnsupportedOperationException("Not supported yet."); 
+        //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void head(int nbline) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+        //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void tail(int nbline) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+        //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void stats(Function func, String axis) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+        //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

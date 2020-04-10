@@ -3,9 +3,22 @@ sudo: false # faster builds
 
 jdk: openjdk8
 
+services:
+  - docker
+
 script:  
  - mvn clean package
  - mvn cobertura:cobertura
+- docker build -t dataframe
        
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+  # TODO (pour docker)
+   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+       docker push dataframe ;
+     fi
+
+
+
