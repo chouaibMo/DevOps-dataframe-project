@@ -10,6 +10,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import fr.devops.operations.Function;
 import fr.devops.utils.Column;
+import fr.devops.utils.Data;
 import fr.devops.utils.ListFactory;
 import static fr.devops.utils.ListFactory.createList;
 import java.io.FileNotFoundException;
@@ -28,7 +29,7 @@ public class Dataframe implements Dataframe_itf{
     
     private List<Column> dataframe;
     
-    public Dataframe(Map<String,List<Object>> data){
+    public Dataframe(Map<String,List<?>> data){
         dataframe = new ArrayList<>();
         for (String colname : data.keySet()) {
             dataframe.add(new Column(colname,"",data.get(colname))); 
@@ -50,6 +51,7 @@ public class Dataframe implements Dataframe_itf{
         for (String[] row : lines) 
             for (int i=0; i<row.length;i++) 
                 dataframe.get(i).getValues().add(row[i]);
+        
   
     }
 
@@ -104,7 +106,7 @@ public class Dataframe implements Dataframe_itf{
     }
     
     public static void main(String[] args) throws Exception {
-        Dataframe df = new Dataframe("src/main/ressources/cities.csv");
+        Dataframe df = new Dataframe("src/m/ressources/cities.csv");
         df.fetchAll();
     }
     

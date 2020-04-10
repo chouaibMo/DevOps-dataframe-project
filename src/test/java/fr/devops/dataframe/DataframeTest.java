@@ -5,6 +5,12 @@
  */
 package fr.devops.dataframe;
 
+import fr.devops.utils.Data;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,22 +24,36 @@ import static org.junit.Assert.*;
  */
 public class DataframeTest {
      
-    public DataframeTest() {
-    }
+    Dataframe students;
+    Dataframe cities;
+    Dataframe oscars;
+    Dataframe trees;
+    static Map<String,List<?>> dataset;
     
     @BeforeClass
-    public static void setUpClass() {
-        System.out.println("BeforeClass");
+    public static void setUpClass() throws Exception {
+        List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Ines");
+        List<Integer> numEtudiant = Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982);   
+        List<Boolean> estAdmis = Arrays.asList(false, true, true, true, false, true);      
+        List<Double> moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15);   
+        dataset = new HashMap<>();
+        dataset.put("prenom", prenom);
+        dataset.put("num Etudiant", numEtudiant);
+        dataset.put("admis", estAdmis);
+        dataset.put("moyenne", moyenne);
     }
     
     @AfterClass
     public static void tearDownClass() {
-        System.out.println("SetUp");
     }
     
     @Before
-    public void setUp() {
-        System.out.println("Before");
+    public void setUp() throws Exception {
+        trees = new Dataframe("src/main/ressources/trees.csv");
+        oscars = new Dataframe("src/main/ressources/oscars.csv");
+        cities = new Dataframe("src/main/ressources/cities.csv");
+        students = new Dataframe(dataset);
+        
     }
     
     @After
@@ -42,15 +62,16 @@ public class DataframeTest {
     }
 
     /**
-     * Test of main method, of class Dataframe.
+     * Test of size method, of class Dataframe.
      */
     @Test
-    public void testMain() {
-        System.out.println("main");
-        /*String[] args = null;
-        Dataframe.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");*/
+    public void testSize1() {
+        assertEquals(students.size(),6);
+        assertEquals(trees.size(),31);
+        assertEquals(oscars.size(),89);
+        assertEquals(cities.size(),128);
+        assertEquals(students.size(),6);
+        assertEquals(students.size(),6);
     }
     
 }
