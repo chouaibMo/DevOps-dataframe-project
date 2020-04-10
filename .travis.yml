@@ -9,16 +9,16 @@ services:
 script:  
  - mvn clean package
  - mvn cobertura:cobertura
-- docker build -t dataframe
+ #- docker build -t dataframe
        
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
   # TODO (pour docker)
-   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-       docker push dataframe ;
-     fi
+   # - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+   #     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+   #     docker push dataframe ;
+   #   fi
 
 
 

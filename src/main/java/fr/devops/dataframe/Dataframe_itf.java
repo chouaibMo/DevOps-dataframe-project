@@ -15,8 +15,10 @@ public interface Dataframe_itf{
     
     public int size();   
     public void fetchAll();
-    public void head(int nbline);
-    public void tail(int nbline);
+    public void fetchFromTo(int i, int j);
+    public void head(int nbline) throws Exception;
+    public void tail(int nbline) throws Exception;
     public void stats(Function f, String axis);
+    
     
 }
