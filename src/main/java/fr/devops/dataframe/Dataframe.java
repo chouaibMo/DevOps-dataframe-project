@@ -67,8 +67,8 @@ public class Dataframe {
         String[] types = csvReader.readNext();
         String[] labels = csvReader.readNext();
         for(int i =0; i<labels.length; i++) {
-            this.dataframe.add(new Column<>(labels[i],types[i],new ArrayList<>()));
-            this.labels.add(labels[i]);
+            this.dataframe.add(new Column<>(labels[i].trim(),types[i].trim(),new ArrayList<>()));
+            this.labels.add(labels[i].trim());
         }
         List<String[]> lines = csvReader.readAll();
         for (String[] row : lines) 
@@ -87,13 +87,33 @@ public class Dataframe {
     }
     
   /**
+    * This method returns a list of the types of a Dataframe columns
+    * 
+    * @return returns a list of String corresponding to Dataframe types.
+    */
+    public List<String> getTypes(){
+        List<String> types = new ArrayList<>();
+        for(Column column : dataframe){
+            types.add(column.getColType());
+        }
+        return types;
+    }
+    
+  /**
     * This method is used to check if a label (axis) already exists
     * 
     * @param label an axis name
     * @return returns true if Dataframe contains the label, false otherwise
     */
     public boolean containsLabel(String label){
-        return this.labels.contains(label);
+        System.out.println("debut contains");
+        for(Column column : dataframe){
+            System.out.println(column.getColName());
+            if(column.getColName().equals(label)){
+                return true;
+            }
+        }   
+        return false;
     }
     
   /**
@@ -254,30 +274,31 @@ public class Dataframe {
     
     public double sum(String label) throws Exception{
         if(!labels.contains(label))
-            throw new Exception("bad value : number of lines");
+            throw new Exception("bad value : axis label is not found");
         return Sum(getColumn(label));
     }
     
     public double min(String label) throws Exception{
         if(!labels.contains(label))
-            throw new Exception("bad value : number of lines");
+            throw new Exception("bad value : axis label is not found");
         return Min(getColumn(label));
     }
 
     public double max(String label) throws Exception{
         if(!labels.contains(label))
-            throw new Exception("bad value : number of lines");
+            throw new Exception("bad value : axis label is not found");
         return Max(getColumn(label));
     }
         
     public double mean(String label) throws Exception{
         if(!labels.contains(label))
-            throw new Exception("bad value : number of lines");
+            throw new Exception("bad value : axis label is not found");
         return Mean(getColumn(label));
     }
     
     public static void main(String[] args) throws Exception {
-        //Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
+        Dataframe df = new Dataframe("src/main/ressources/M1.csv");
+        
         Map<String,List<?>> dataset;
         List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Ines");
         List<Integer> numEtudiant = Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982);   
@@ -289,9 +310,12 @@ public class Dataframe {
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
-        Dataframe df = new Dataframe(dataset);
+        //Dataframe df = new Dataframe(dataset);
         
         df.fetchAll();
+        //System.out.println(df.getLabels());
+        //System.out.println(df.getTypes());
+        //System.out.println("contains : "+df.containsLabel("moyenne"));
         
         System.out.println("min  : "+df.min("moyenne"));
         System.out.println("max  : "+df.max("moyenne"));

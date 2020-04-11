@@ -17,9 +17,7 @@ import java.util.Collections;
 public abstract class Statistics {
     
     public static double Min(Column column) throws Exception{
-        if( column.getValues().get(0) instanceof Integer || 
-            column.getValues().get(0) instanceof Double  ||
-            column.getValues().get(0) instanceof Float ){
+        if( column.isDigit() ){
             double min = Float.MAX_VALUE;
             for(int i=0; i<column.getValues().size(); i++)
                 if (min > Float.parseFloat(column.getValues().get(i).toString()))
@@ -31,23 +29,19 @@ public abstract class Statistics {
       }
       
     public static double Max(Column column) throws Exception{
-        if( column.getValues().get(0) instanceof Integer || 
-            column.getValues().get(0) instanceof Double  ||
-            column.getValues().get(0) instanceof Float ){
-          double max = Float.MIN_VALUE;
-          for(int i=0; i<column.getValues().size(); i++)
-              if (max < Float.parseFloat(column.getValues().get(i).toString()))
+        if( column.isDigit()){
+            double max = Float.MIN_VALUE;
+            for(int i=0; i<column.getValues().size(); i++)
+                if (max < Float.parseFloat(column.getValues().get(i).toString()))
                   max = Float.parseFloat( column.getValues().get(i).toString() );
-          return max;
-      }
-      else
-          throw new Exception("bad column type");
+            return max;
+        }
+        else
+            throw new Exception("bad column type");
     }
       
     public static double Sum(Column column) throws Exception{
-        if( column.getValues().get(0) instanceof Integer || 
-            column.getValues().get(0) instanceof Double  ||
-            column.getValues().get(0) instanceof Float ){
+        if( column.isDigit()){
             double sum = 0;
             for(int i=0; i<column.getValues().size(); i++)
                     sum += Double.parseDouble( column.getValues().get(i).toString() );
@@ -58,9 +52,7 @@ public abstract class Statistics {
     }
       
     public static double Mean(Column column) throws Exception {
-        if( column.getValues().get(0) instanceof Integer || 
-            column.getValues().get(0) instanceof Double  ||
-            column.getValues().get(0) instanceof Float ){
+        if( column.isDigit()){
             double sum = 0;
             for(int i=0; i<column.getValues().size(); i++)
                     sum += Double.parseDouble( column.getValues().get(i).toString() );
@@ -69,4 +61,7 @@ public abstract class Statistics {
         else
             throw new Exception("bad column type");
     }
+    
+    
+
 }

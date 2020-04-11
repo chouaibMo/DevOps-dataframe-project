@@ -38,4 +38,12 @@ public class Column<T> {
         return values;
     }
 
+    public boolean isDigit(){
+        return( this.values.get(0) instanceof Integer || 
+                this.values.get(0) instanceof Double  ||
+                this.values.get(0) instanceof Float   ||
+                this.colType.equals("Integer")         ||
+                this.colType.equals("Double" )         ||
+                this.colType.equals("Float"  )           );
+    }
 }
