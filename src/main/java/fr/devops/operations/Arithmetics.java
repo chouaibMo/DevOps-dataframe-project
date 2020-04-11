@@ -11,7 +11,7 @@ import fr.devops.dataframe.Dataframe;
  *
  * @author chouaib
  */
-public interface Function {
+public interface Arithmetics {
     
-      public double operation(Object[] data);
+    public double operation(Dataframe df);
 }

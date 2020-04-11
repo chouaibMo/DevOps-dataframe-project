@@ -37,5 +37,11 @@ public class Column<T> {
     public List<T> getValues() {
         return values;
     }
-    
+
+    public List<String> valuestoString() {
+        List<String> list = new ArrayList<String>();
+        for(T value : values)
+            list.add(String.valueOf(value));
+        return list;
+    }
 }

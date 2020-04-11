@@ -70,8 +70,7 @@ public class DataframeTest {
         assertEquals(trees.size(),31);
         assertEquals(oscars.size(),89);
         assertEquals(cities.size(),128);
-        assertEquals(students.size(),6);
-        assertEquals(students.size(),6);
+        
     }
     
 }
