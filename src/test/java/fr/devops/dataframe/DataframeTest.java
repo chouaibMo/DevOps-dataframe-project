@@ -16,33 +16,47 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 
 /**
  *
  * @author chouaib
  */
 public class DataframeTest {
-     
+    
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10);
+    
     Dataframe students;
     Dataframe cities;
     Dataframe oscars;
     Dataframe trees;
     static Map<String,List<?>> dataset;
     
+    static List<String> prenom;
+    static List<Integer> numEtudiant;
+    static List<Boolean> estAdmis;
+    static List<Double> moyenne;
+    
     @BeforeClass
     public static void setUpClass() throws Exception {
+        prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Ines");
+        numEtudiant = Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982);   
+        estAdmis = Arrays.asList(false, true, true, true, false, true);      
+        moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15); 
     }
     
     @AfterClass
     public static void tearDownClass() {
+        prenom = null;
+        numEtudiant = null;  
+        estAdmis = null;     
+        moyenne = null;
     }
     
     @Before
     public void setUp() throws Exception {
-        List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Ines");
-        List<Integer> numEtudiant = Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982);   
-        List<Boolean> estAdmis = Arrays.asList(false, true, true, true, false, true);      
-        List<Double> moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15);  
         
         dataset = new HashMap<>();
         dataset.put("prenom", prenom);
@@ -59,6 +73,11 @@ public class DataframeTest {
     
     @After
     public void tearDown() {
+        dataset = null;
+        trees = null;
+        oscars = null;
+        cities = null;
+        students = null;
     }
 
     /**

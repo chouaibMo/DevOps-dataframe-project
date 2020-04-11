@@ -10,6 +10,9 @@ import com.opencsv.CSVReader;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciithemes.a7.A7_Grids;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
+import fr.devops.Exceptions.BadArgumentException;
+import fr.devops.Exceptions.LabelNotFoundException;
+import fr.devops.Exceptions.NotaNumberException;
 import fr.devops.utils.Column;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -106,9 +109,7 @@ public class Dataframe {
     * @return returns true if Dataframe contains the label, false otherwise
     */
     public boolean containsLabel(String label){
-        System.out.println("debut contains");
         for(Column column : dataframe){
-            System.out.println(column.getColName());
             if(column.getColName().equals(label)){
                 return true;
             }
@@ -130,14 +131,18 @@ public class Dataframe {
     * 
     * @param label
     * @return int returns the size of the Dataframe.
-    * @throws java.lang.Exception
+    * @throws fr.devops.Exceptions.LabelNotFoundException
     */
-    public Column getColumn(String label) throws Exception{
-        if(!labels.contains(label))
-            throw new Exception("bad value : number of lines");
+    public Column getColumn(String label) throws LabelNotFoundException {
+        if(!containsLabel(label))
+            throw new LabelNotFoundException(label+" is not a column name");
         
-        Column column = getColumn(labels.indexOf(label));
-        return column;
+        Column c = null;
+        for(Column column : dataframe)
+            if(column.getColName().equals(label))
+                c = column;
+        
+        return c;
     }
     
   /**
@@ -146,20 +151,20 @@ public class Dataframe {
     *
     * @param index 
     * @return int returns the size of the Dataframe.
-    * @throws Exception if index if greater than Dataframe size
+    * @throws BadArgumentException if index if greater than Dataframe size
     */
-    public Column getColumn(int index) throws Exception{
+    public Column getColumn(int index) throws BadArgumentException{
         if(index < 0 || index >= size())
-            throw new Exception("bad value : number of lines");
+            throw new BadArgumentException("bad value : number of lines");
         
         return dataframe.get(index);
     }
 
   /**
     * This method is used to display all the rows of a Dataframe.The rows are printed line by line in stdout.
-     * @throws java.lang.Exception
+    * @throws fr.devops.Exceptions.BadArgumentException
     */
-    public void fetchAll() throws Exception{
+    public void fetchAll() throws BadArgumentException{
         fetchFromTo(0,size());
     }
     
@@ -169,11 +174,15 @@ public class Dataframe {
     * 
     * @param start the row where display is started
     * @param end  the row where .
-    * @exception Exception if nbLine is invalid 
+    * @exception BadArgumentException if nbLine is invalid 
     */
-    public void fetchFromTo(int start, int end) throws Exception{
-        if(start < 0 || start > size() || end < 0 || end > size() || start > end)
-            throw new Exception("bad value : number of lines");
+    public void fetchFromTo(int start, int end) throws BadArgumentException{
+        if(start < 0 || start > size() )       //|| end < 0 || end > size() || )
+            throw new BadArgumentException("start");
+        if(end < 0 || end > size()) 
+            throw new BadArgumentException("end");
+        if(start > end) 
+            throw new BadArgumentException("start shoud be <= end");
         
         AsciiTable at = new AsciiTable();
         at.addRule();
@@ -197,11 +206,11 @@ public class Dataframe {
     * The rows are printed line by line in stdout.
     * 
     * @param nbline the number row to display
-    * @exception Exception if nbLine is invalid 
+    * @throws BadArgumentException if nbLine is invalid 
     */
-    public void head(int nbline) throws Exception {
+    public void head(int nbline) throws BadArgumentException {
         if(nbline < 0 || nbline > size())
-            throw new Exception("bad value : number of lines");
+            throw new BadArgumentException("number of lines");
         fetchFromTo(0, nbline);
     }
 
@@ -210,11 +219,11 @@ public class Dataframe {
     * The rows are printed line by line in stdout.
     * 
     * @param nbline the number row to display
-    * @exception Exception if nbLine is invalid 
+    * @throws BadArgumentException if nbLine is invalid 
     */
-    public void tail(int nbline) throws Exception {
+    public void tail(int nbline) throws BadArgumentException {
         if(nbline < 0 || nbline > size())
-            throw new Exception("bad value : number of lines");
+            throw new BadArgumentException("number of lines");
         fetchFromTo(size()-nbline,size());
     }
 
@@ -222,7 +231,7 @@ public class Dataframe {
     * This method is used to insert a row in a Dataframed.
     * 
     * @param row the row to insert
-    * @exception Exception
+    * @throws Exception
     */
     public void insertRow(List<Object> row) throws Exception{
         throw new UnsupportedOperationException("Not supported yet."); 
@@ -233,7 +242,7 @@ public class Dataframe {
     * This method is used to insert a column in a Dataframed.
     * 
     * @param column the column to insert
-    * @exception Exception
+    * @throws Exception
     */
     public void insertColumn(Column column) throws Exception{
         throw new UnsupportedOperationException("Not supported yet."); 
@@ -244,7 +253,7 @@ public class Dataframe {
     * This method is used to remove a column from a Dataframed.
     * 
     * @param label the column to remove
-    * @exception Exception
+    * @throws Exception
     */
     public void dropColumn(String label) throws Exception{
         throw new UnsupportedOperationException("Not supported yet."); 
@@ -255,7 +264,7 @@ public class Dataframe {
     * This method is used to remove a column from a Dataframed.
     * 
     * @param index the column to remove
-    * @exception Exception
+    * @throws Exception
     */
     public void dropColumn(int index) throws Exception{
         throw new UnsupportedOperationException("Not supported yet."); 
@@ -267,62 +276,79 @@ public class Dataframe {
     * 
     * @param label the name of the column  to extract
     * @return a column object
-    * @exception Exception if label if not a valid column name
+    * @throws Exception if label if not a valid column name
     */
     public Column pop(String label) throws Exception{
         throw new UnsupportedOperationException("Not supported yet."); 
         //To change body of generated methods, choose Tools | Templates.
     }
     
-    
-    public double sum(String label) throws Exception{
-        if(!labels.contains(label))
-            throw new Exception("bad value : axis label is not found");
+   /**
+    * This method is used to compute the sum of a Dataframed column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param label the name of the column  to extract
+    * @return a double 
+    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
+    * @throws fr.devops.Exceptions.NotaNumberException if column is not a column of numbers.
+    */
+    public double sum(String label) throws LabelNotFoundException, NotaNumberException {
+        if(!containsLabel(label))
+            throw new LabelNotFoundException(label+ "is not a column name");
         return Sum(getColumn(label));
     }
     
-    public double min(String label) throws Exception{
-        if(!labels.contains(label))
-            throw new Exception("bad value : axis label is not found");
+       /**
+    * This method is used to compute the sum of a Dataframed column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param label the name of the column  to extract
+    * @return a double 
+    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
+    * @throws fr.devops.Exceptions.NotaNumberException if column is not a column of numbers.
+    */
+    public double min(String label) throws LabelNotFoundException, NotaNumberException{
+        if(!containsLabel(label))
+            throw new LabelNotFoundException(label+ "is not a column name");
         return Min(getColumn(label));
     }
 
-    public double max(String label) throws Exception{
-        if(!labels.contains(label))
-            throw new Exception("bad value : axis label is not found");
+    public double max(String label) throws LabelNotFoundException, NotaNumberException{
+        if(!containsLabel(label))
+            throw new LabelNotFoundException(label+ "is not a column name");
         return Max(getColumn(label));
     }
         
-    public double mean(String label) throws Exception{
-        if(!labels.contains(label))
-            throw new Exception("bad value : axis label is not found");
+    public double mean(String label) throws LabelNotFoundException, NotaNumberException{
+        if(!containsLabel(label))
+            throw new LabelNotFoundException(label+ "is not a column name");
         return Mean(getColumn(label));
     }
     
     public static void main(String[] args) throws Exception {
-        Dataframe df = new Dataframe("src/main/ressources/M1.csv");
+        //Dataframe df = new Dataframe("src/main/ressources/M1.csv");
         
         Map<String,List<?>> dataset;
         List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Ines");
-        List<Integer> numEtudiant = Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982);   
+        List<Integer> numEtudiant  = Arrays.asList(10, 11, 15, 9, 2, 6);    
         List<Boolean> estAdmis = Arrays.asList(false, true, true, true, false, true);      
-        List<Double> moyenne = Arrays.asList(1., 1., 1., 1., 10., 1.);   
+        List<Double> moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15); 
         dataset = new HashMap<>();
         dataset.put("prenom", prenom);
         dataset.put("num Etudiant", numEtudiant);
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
-        //Dataframe df = new Dataframe(dataset);
+        Dataframe df = new Dataframe(dataset);
         
         df.fetchAll();
         //System.out.println(df.getLabels());
         //System.out.println(df.getTypes());
         //System.out.println("contains : "+df.containsLabel("moyenne"));
         
-        System.out.println("min  : "+df.min("num Etudiant"));
-        System.out.println("max  : "+df.max("num Etudiant"));
-        System.out.println("sum  : "+df.sum("num Etudiant"));
+        //System.out.println("min  : "+df.min("num Etudiant"));
+        //System.out.println("max  : "+df.max("num Etudiant"));
+        //System.out.println("sum  : "+df.sum("num Etudiant"));
         System.out.println("mean : "+df.mean("num Etudiant"));
         
         

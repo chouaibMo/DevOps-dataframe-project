@@ -5,10 +5,8 @@
  */
 package fr.devops.operations;
 
-import fr.devops.dataframe.Dataframe;
+import fr.devops.Exceptions.NotaNumberException;
 import fr.devops.utils.Column;
-import fr.devops.utils.Data;
-import java.util.Collections;
 
 /**
  *
@@ -16,7 +14,7 @@ import java.util.Collections;
  */
 public abstract class Statistics {
     
-    public static double Min(Column column) throws Exception{
+    public static double Min(Column column) throws NotaNumberException{
         if( column.isDigit() ){
             double min = Float.MAX_VALUE;
             for(int i=0; i<column.getValues().size(); i++)
@@ -25,10 +23,10 @@ public abstract class Statistics {
             return min;
         }
         else
-            throw new Exception("bad column type");
+            throw new NotaNumberException("column values is not a list of numbers");
       }
       
-    public static double Max(Column column) throws Exception{
+    public static double Max(Column column) throws NotaNumberException{
         if( column.isDigit()){
             double max = Float.MIN_VALUE;
             for(int i=0; i<column.getValues().size(); i++)
@@ -37,10 +35,10 @@ public abstract class Statistics {
             return max;
         }
         else
-            throw new Exception("bad column type");
+            throw new NotaNumberException("column values is not a list of numbers");
     }
       
-    public static double Sum(Column column) throws Exception{
+    public static double Sum(Column column) throws NotaNumberException{
         if( column.isDigit()){
             double sum = 0;
             for(int i=0; i<column.getValues().size(); i++)
@@ -48,18 +46,20 @@ public abstract class Statistics {
             return sum;
         }
         else
-            throw new Exception("bad column type");
+            throw new NotaNumberException("column values is not a list of numberse");
     }
       
-    public static double Mean(Column column) throws Exception {
+    public static double Mean(Column column) throws NotaNumberException {
         if( column.isDigit()){
             double sum = 0;
             for(int i=0; i<column.getValues().size(); i++)
                     sum += Double.parseDouble( column.getValues().get(i).toString() );
-            return sum / column.getValues().size();
+            
+            double roundOff = Math.round(sum/column.getValues().size()* 100.0) / 100.0;
+            return roundOff;
         }
         else
-            throw new Exception("bad column type");
+            throw new NotaNumberException("column values is not a list of numbers");
     }
     
     
