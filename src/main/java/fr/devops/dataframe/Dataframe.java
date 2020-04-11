@@ -110,11 +110,11 @@ public class Dataframe {
     * 
     * @return int returns the size of the Dataframe.
     */
-    public Column<?> getColumn(String label) throws Exception{
+    public Column getColumn(String label) throws Exception{
         if(!labels.contains(label))
             throw new Exception("bad value : number of lines");
         
-        Column<?> column = getColumn(labels.indexOf(label));
+        Column column = getColumn(labels.indexOf(label));
         return column;
     }
     
@@ -125,7 +125,7 @@ public class Dataframe {
     * @return int returns the size of the Dataframe.
     * @throws Exception if index if greater than Dataframe size
     */
-    public Column<?> getColumn(int index) throws Exception{
+    public Column getColumn(int index) throws Exception{
         if(index < 0 || index >= size())
             throw new Exception("bad value : number of lines");
         
@@ -212,7 +212,7 @@ public class Dataframe {
     * @param column the column to insert
     * @exception Exception
     */
-    public void insertColumn(Column<?> column) throws Exception{
+    public void insertColumn(Column column) throws Exception{
         throw new UnsupportedOperationException("Not supported yet."); 
         //To change body of generated methods, choose Tools | Templates.
     }
@@ -246,52 +246,59 @@ public class Dataframe {
     * @return a column object
     * @exception Exception if label if not a valid column name
     */
-    public Column<?> pop(String label) throws Exception{
+    public Column pop(String label) throws Exception{
         throw new UnsupportedOperationException("Not supported yet."); 
         //To change body of generated methods, choose Tools | Templates.
     }
     
     
-    public Double sum(String label) throws Exception{
+    public double sum(String label) throws Exception{
         if(!labels.contains(label))
             throw new Exception("bad value : number of lines");
         return Sum(getColumn(label));
     }
     
-    public Double min(String label) throws Exception{
+    public double min(String label) throws Exception{
         if(!labels.contains(label))
             throw new Exception("bad value : number of lines");
         return Min(getColumn(label));
     }
 
-    public Double max(String label) throws Exception{
+    public double max(String label) throws Exception{
         if(!labels.contains(label))
             throw new Exception("bad value : number of lines");
         return Max(getColumn(label));
     }
         
-    public Double mean(String label) throws Exception{
+    public double mean(String label) throws Exception{
         if(!labels.contains(label))
             throw new Exception("bad value : number of lines");
         return Mean(getColumn(label));
     }
     
     public static void main(String[] args) throws Exception {
-        Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
+        //Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
         Map<String,List<?>> dataset;
         List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Ines");
         List<Integer> numEtudiant = Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982);   
         List<Boolean> estAdmis = Arrays.asList(false, true, true, true, false, true);      
-        List<Double> moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15);   
+        List<Double> moyenne = Arrays.asList(1., 1., 1., 1., 10., 1.);   
         dataset = new HashMap<>();
         dataset.put("prenom", prenom);
         dataset.put("num Etudiant", numEtudiant);
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
-        //Dataframe df = new Dataframe(dataset);
+        Dataframe df = new Dataframe(dataset);
         
-        df.tail(3);
+        df.fetchAll();
+        
+        System.out.println("min  : "+df.min("moyenne"));
+        System.out.println("max  : "+df.max("moyenne"));
+        System.out.println("sum  : "+df.sum("moyenne"));
+        System.out.println("mean : "+df.mean("moyenne"));
+        
+        
     }
     
 }

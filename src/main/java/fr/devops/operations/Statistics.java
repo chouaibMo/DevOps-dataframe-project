@@ -16,25 +16,57 @@ import java.util.Collections;
  */
 public abstract class Statistics {
     
-      public static Double Min(Column column){
-          return (Double) Collections.min(column.getValues());
+    public static double Min(Column column) throws Exception{
+        if( column.getValues().get(0) instanceof Integer || 
+            column.getValues().get(0) instanceof Double  ||
+            column.getValues().get(0) instanceof Float ){
+            double min = Float.MAX_VALUE;
+            for(int i=0; i<column.getValues().size(); i++)
+                if (min > Float.parseFloat(column.getValues().get(i).toString()))
+                    min = Float.parseFloat( column.getValues().get(i).toString() );
+            return min;
+        }
+        else
+            throw new Exception("bad column type");
       }
       
-      public static Double Max(Column column){
-          return (Double) Collections.max(column.getValues());
-      }
-      
-      public static Double Sum(Column column){
-          Double sum = 0.;
+    public static double Max(Column column) throws Exception{
+        if( column.getValues().get(0) instanceof Integer || 
+            column.getValues().get(0) instanceof Double  ||
+            column.getValues().get(0) instanceof Float ){
+          double max = Float.MIN_VALUE;
           for(int i=0; i<column.getValues().size(); i++)
-              sum += (Double) column.getValues().get(i);
-          return sum;
+              if (max < Float.parseFloat(column.getValues().get(i).toString()))
+                  max = Float.parseFloat( column.getValues().get(i).toString() );
+          return max;
       }
+      else
+          throw new Exception("bad column type");
+    }
       
-      public static Double Mean(Column column){
-          Double mean = 0.;
-          for(int i=0; i<column.getValues().size(); i++)
-              mean += (Double) column.getValues().get(i);
-          return mean/column.getValues().size();
-      }
+    public static double Sum(Column column) throws Exception{
+        if( column.getValues().get(0) instanceof Integer || 
+            column.getValues().get(0) instanceof Double  ||
+            column.getValues().get(0) instanceof Float ){
+            double sum = 0;
+            for(int i=0; i<column.getValues().size(); i++)
+                    sum += Double.parseDouble( column.getValues().get(i).toString() );
+            return sum;
+        }
+        else
+            throw new Exception("bad column type");
+    }
+      
+    public static double Mean(Column column) throws Exception {
+        if( column.getValues().get(0) instanceof Integer || 
+            column.getValues().get(0) instanceof Double  ||
+            column.getValues().get(0) instanceof Float ){
+            double sum = 0;
+            for(int i=0; i<column.getValues().size(); i++)
+                    sum += Double.parseDouble( column.getValues().get(i).toString() );
+            return sum / column.getValues().size();
+        }
+        else
+            throw new Exception("bad column type");
+    }
 }

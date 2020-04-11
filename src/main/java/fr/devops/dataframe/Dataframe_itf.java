@@ -81,7 +81,7 @@ public interface Dataframe_itf{
     * @param column the column to insert
     * @exception Exception
     */
-    public void insertColumn(Column<?> column) throws Exception;
+    public void insertColumn(Column column) throws Exception;
     
   /**
     * This method is used to remove a column from a Dataframed.
@@ -98,7 +98,7 @@ public interface Dataframe_itf{
     * @return a column object
     * @exception Exception if label if not a valid column name
     */
-    public Column<?> pop(String label) throws Exception;
+    public Column pop(String label) throws Exception;
     
     
     public void stats(Statistics f, String label);
