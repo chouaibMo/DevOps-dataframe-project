@@ -128,7 +128,9 @@ public class Dataframe {
   /**
     * This method returns the size of the Dataframe object
     * 
+    * @param label
     * @return int returns the size of the Dataframe.
+    * @throws java.lang.Exception
     */
     public Column getColumn(String label) throws Exception{
         if(!labels.contains(label))
@@ -138,10 +140,11 @@ public class Dataframe {
         return column;
     }
     
-     /**
+  /**
     * This method returns a column of the Dataframe from it's index.
     * index should be equals or greater than 0 and less than Dataframe's size.
-    * 
+    *
+    * @param index 
     * @return int returns the size of the Dataframe.
     * @throws Exception if index if greater than Dataframe size
     */
@@ -153,8 +156,8 @@ public class Dataframe {
     }
 
   /**
-    * This method is used to display all the rows of a Dataframe.
-    * The rows are printed line by line in stdout.
+    * This method is used to display all the rows of a Dataframe.The rows are printed line by line in stdout.
+     * @throws java.lang.Exception
     */
     public void fetchAll() throws Exception{
         fetchFromTo(0,size());
@@ -317,10 +320,10 @@ public class Dataframe {
         //System.out.println(df.getTypes());
         //System.out.println("contains : "+df.containsLabel("moyenne"));
         
-        System.out.println("min  : "+df.min("moyenne"));
-        System.out.println("max  : "+df.max("moyenne"));
-        System.out.println("sum  : "+df.sum("moyenne"));
-        System.out.println("mean : "+df.mean("moyenne"));
+        System.out.println("min  : "+df.min("num Etudiant"));
+        System.out.println("max  : "+df.max("num Etudiant"));
+        System.out.println("sum  : "+df.sum("num Etudiant"));
+        System.out.println("mean : "+df.mean("num Etudiant"));
         
         
     }
