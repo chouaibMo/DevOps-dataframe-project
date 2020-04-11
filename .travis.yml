@@ -1,5 +1,4 @@
-langague: java
-sudo: false # faster builds
+langage: java
 
 jdk: openjdk8
 
