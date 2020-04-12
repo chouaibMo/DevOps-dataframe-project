@@ -2,22 +2,31 @@ language: java
 
 jdk: openjdk8
 
-#services:
- # - docker
+services:
+ - docker
+
+ env:
+  global:
+    - IMAGE_NAME=DevOpsDataframe
+    - REGISTRY_NAME=chouaibmo
 
 script:  
- - mvn clean package
+ - echo test
  - mvn cobertura:cobertura
- #- docker build -t dataframe
+ 
        
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - docker build -t $(IMAGE_NAME):latest .
+  - docker run -it --rm $(IMAGE_NAME):latest
 
-  # TODO (pour docker)
-   # - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-   #     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-   #     docker push dataframe ;
-   #   fi
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker tag $(IMAGE_NAME) $(REGISTRY_NAME)/$(IMAGE_NAME):latest
 
-
+deploy:
+  provider: script
+  script: docker push $(REGISTRY_NAME)/$(IMAGE_NAME):latest
+  on:
+    branch: master
 

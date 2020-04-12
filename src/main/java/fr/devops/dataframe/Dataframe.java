@@ -385,7 +385,7 @@ public class Dataframe {
         return Mean(getColumn(label));
     }
     
- /*   
+  
     public static void main(String[] args) throws Exception {
         //Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
         Map<String,List<?>> dataset;
@@ -403,5 +403,5 @@ public class Dataframe {
         
         df.fetchAll();
     }
-    */
+    
 }
