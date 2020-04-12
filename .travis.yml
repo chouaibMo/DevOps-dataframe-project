@@ -11,7 +11,7 @@ services:
     - REGISTRY_NAME=chouaibmo
 
 script:  
- - echo test
+ - mvn clean package
  - mvn cobertura:cobertura
  
        
@@ -19,14 +19,8 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
   - docker build -t $(IMAGE_NAME):latest .
   - docker run -it --rm $(IMAGE_NAME):latest
-
-before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker tag $(IMAGE_NAME) $(REGISTRY_NAME)/$(IMAGE_NAME):latest
+  - docker push $(REGISTRY_NAME)/$(IMAGE_NAME):latest
 
-deploy:
-  provider: script
-  script: docker push $(REGISTRY_NAME)/$(IMAGE_NAME):latest
-  on:
-    branch: master
 
