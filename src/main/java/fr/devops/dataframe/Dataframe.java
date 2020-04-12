@@ -13,7 +13,6 @@ import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import fr.devops.Exceptions.BadArgumentException;
 import fr.devops.Exceptions.LabelNotFoundException;
 import fr.devops.Exceptions.NotaNumberException;
-import fr.devops.utils.Column;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -97,7 +96,7 @@ public class Dataframe {
     public List<String> getTypes(){
         List<String> types = new ArrayList<>();
         for(Column column : dataframe){
-            types.add(column.getColType());
+            types.add(column.getType());
         }
         return types;
     }
@@ -110,7 +109,7 @@ public class Dataframe {
     */
     public boolean containsLabel(String label){
         for(Column column : dataframe){
-            if(column.getColName().equals(label)){
+            if(column.getName().equals(label)){
                 return true;
             }
         }   
@@ -139,7 +138,7 @@ public class Dataframe {
         
         Column c = null;
         for(Column column : dataframe)
-            if(column.getColName().equals(label))
+            if(column.getName().equals(label))
                 c = column;
         
         return c;
@@ -329,7 +328,7 @@ public class Dataframe {
         //Dataframe df = new Dataframe("src/main/ressources/M1.csv");
         
         Map<String,List<?>> dataset;
-        List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Ines");
+        List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Sarah");
         List<Integer> numEtudiant  = Arrays.asList(10, 11, 15, 9, 2, 6);    
         List<Boolean> estAdmis = Arrays.asList(false, true, true, true, false, true);      
         List<Double> moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15); 

@@ -6,13 +6,13 @@
 package fr.devops.operations;
 
 import fr.devops.Exceptions.NotaNumberException;
-import fr.devops.utils.Column;
+import fr.devops.dataframe.Column;
 
 /**
  *
  * @author chouaib
  */
-public abstract class Statistics {
+public class Statistics {
     
     public static double Min(Column column) throws NotaNumberException{
         if( column.isDigit() ){

@@ -5,7 +5,6 @@
  */
 package fr.devops.dataframe;
 
-import fr.devops.utils.Column;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -28,11 +27,11 @@ public class DataframeTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10);
     
-    Dataframe students;
-    Dataframe cities;
-    Dataframe oscars;
-    Dataframe trees;
-    static Map<String,List<?>> dataset;
+    private Dataframe students;
+    private Dataframe cities;
+    private Dataframe oscars;
+    private Dataframe trees;
+    private static Map<String,List<?>> dataset;
     
     static List<String> prenom;
     static List<Integer> numEtudiant;
@@ -41,7 +40,7 @@ public class DataframeTest {
     
     @BeforeClass
     public static void setUpClass() throws Exception {
-        prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Ines");
+        prenom = Arrays.asList("Léa", "Claude", "Tony", "Emma", "Ali", "Sarah");
         numEtudiant = Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982);   
         estAdmis = Arrays.asList(false, true, true, true, false, true);      
         moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15); 
