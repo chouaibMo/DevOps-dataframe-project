@@ -180,7 +180,7 @@ public class Dataframe {
     * @throws BadArgumentException if index if greater than Dataframe size
     */
     public Column getColumn(int index) throws BadArgumentException{
-        if(index < 0 || index >= size())
+        if(index < 0 || index >= getLabels().size())
             throw new BadArgumentException("bad value : number of lines");
         
         return dataframe.get(index);
@@ -302,7 +302,7 @@ public class Dataframe {
     public void dropColumn(int index) throws BadArgumentException{
         if(dataframe.isEmpty())
             throw new BadArgumentException("dataframe is empty");
-        if(index < 0 || index > dataframe.size())
+        if(index < 0 || index >= dataframe.size())
             throw new BadArgumentException(index+" is not a valid column index");
         
         dataframe.remove(index);
@@ -385,10 +385,9 @@ public class Dataframe {
         return Mean(getColumn(label));
     }
     
-    
+ /*   
     public static void main(String[] args) throws Exception {
-        Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
-        
+        //Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
         Map<String,List<?>> dataset;
         List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Sarah");
         List<Integer> numEtudiant  = Arrays.asList(10, 11, 15, 9, 2, 6);    
@@ -400,41 +399,9 @@ public class Dataframe {
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
-        //Dataframe df = new Dataframe(dataset);
+        Dataframe df = new Dataframe(dataset);
         
-        //df.fetchAll();
-        //System.out.println(df.getLabels());
-        //System.out.println(df.getTypes());
-        //System.out.println("contains : "+df.containsLabel("moyenne"));
-        
-        //System.out.println("min  : "+df.min("Index"));
-        //System.out.println("max  : "+df.max("Index"));
-        //System.out.println("sum  : "+df.sum("Index"));
-        //System.out.println("mean : "+df.mean("Index"));
-        //System.out.println();
-        //df.dropColumn("Name"); 
-        //System.out.println(df.getLabels());
-        //System.out.println(df.getTypes());
-        
-        Dataframe emptyDf = new Dataframe();
-        Column col1 = new Column("testCol1","Integer",  Arrays.asList(1, 2));
-        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2, 3));
-        
-        System.out.println("avant insert : "+emptyDf.dataframe.size());
-        emptyDf.insertColumn(col1);
-        emptyDf.insertColumn(col2);
-        
-        System.out.println("apres insert : "+emptyDf.dataframe.size());
-        
-        Column c = emptyDf.pop();
-        System.out.println(c.equals(col2));
-        System.out.println(c.getName());
-        System.out.println("apres 1 pop  : "+emptyDf.dataframe.size());
-        
-        c = emptyDf.pop();
-        System.out.println("avant insert : "+emptyDf.dataframe.size());
-        System.out.println(c.equals(col1));
-        System.out.println(c.getName());
+        df.fetchAll();
     }
-    
+    */
 }

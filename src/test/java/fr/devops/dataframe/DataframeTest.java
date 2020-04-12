@@ -67,7 +67,6 @@ public class DataframeTest {
         cities = new Dataframe("src/main/ressources/cities.csv");
         students = new Dataframe(dataset);
         emptyDf = new Dataframe();
-        
     }
     
     @After
@@ -88,6 +87,30 @@ public class DataframeTest {
         assertEquals(students.size(),6);
         assertEquals(oscars.size(),89);
         assertEquals(cities.size(),128);
+    }
+    
+   /**
+     * Test of indexOfLabel method, of class Dataframe.
+     */
+    @Test
+    public void testIndexOfLabel() {
+        assertEquals(0, students.indexOfLabel("admis"));
+        assertEquals(1, students.indexOfLabel("prenom"));
+        assertEquals(2, students.indexOfLabel("num Etudiant"));
+        assertEquals(-1,students.indexOfLabel("numEtudiant"));
+    }
+    
+    /**
+     * Test of indexOfLabel method, of class Dataframe.
+     */
+    @Test
+    public void testIndexOfLabel2() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        assertEquals(oscars.indexOfLabel("Index"),0);
+        oscars.dropColumn("Age");
+        assertEquals(oscars.indexOfLabel("Name"),2);
+        oscars.insertColumn(col);
+        assertEquals(oscars.indexOfLabel("testCol"),4);
     }
 
     /**
@@ -169,14 +192,54 @@ public class DataframeTest {
      */
     @Test
     public void testGetColumn_String() throws Exception {
+        Column col1 = new Column("testCol1","Integer",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2, 3));
         
+        emptyDf.insertColumn(col1);
+        emptyDf.insertColumn(col2);
+        assertEquals(col1, emptyDf.getColumn("testCol1"));
+        assertEquals(col2, emptyDf.getColumn("testCol2"));
+    }
+    
+    /**
+     * Test of getColumn method, of class Dataframe.
+     */
+    @Test (expected = LabelNotFoundException.class)
+    public void testGetColumn_StringException() throws Exception {
+        Column col1 = new Column("testCol1","Integer",  Arrays.asList(1, 2));
+        
+        emptyDf.insertColumn(col1);
+        emptyDf.getColumn("test");
     }
 
     /**
      * Test of getColumn method, of class Dataframe.
      */
-    @Test
+    @Test 
     public void testGetColumn_int() throws Exception {
+        Column col1 = new Column("testCol1","Integer",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2, 3));
+        
+        emptyDf.insertColumn(col1);
+        emptyDf.insertColumn(col2);
+        assertEquals(col1, emptyDf.getColumn(0));
+        assertEquals(col2, emptyDf.getColumn(1));
+    }
+    
+    /**
+     * Test of getColumn method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testGetColumn_intException1() throws Exception {
+        students.getColumn(5);
+    }
+    
+   /**
+     * Test of getColumn method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testGetColumn_intException2() throws Exception {
+        students.getColumn(-1);
     }
 
     /**
@@ -302,6 +365,17 @@ public class DataframeTest {
     public void testDropColumnBadArgumentExeption() throws Exception {
         emptyDf.dropColumn(0);
     }
+    
+   /**
+     * Test of dropColumn method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testDropColumnBadArgumentExeption1() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        emptyDf.insertColumn(col);
+        emptyDf.dropColumn(1);
+    }
+    
     /**
      * Test of dropColumn method, of class Dataframe.
      */
@@ -312,6 +386,26 @@ public class DataframeTest {
         assertEquals(emptyDf.getLabels().size(),1);
         emptyDf.dropColumn(0);
         emptyDf.dropColumn(0);
+    }
+    
+   /**
+     * Test of dropColumn method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testDropColumnBadArgumentExeption3() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        emptyDf.insertColumn(col);
+        emptyDf.dropColumn(-1);
+    }
+    
+    /**
+     * Test of dropColumn method, of class Dataframe.
+     */
+    @Test (expected = LabelNotFoundException.class)
+    public void testDropColumnBadArgumentExeption4() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        emptyDf.insertColumn(col);
+        emptyDf.dropColumn("test");
     }
     
     
