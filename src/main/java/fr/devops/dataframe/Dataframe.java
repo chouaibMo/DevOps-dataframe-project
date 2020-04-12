@@ -48,7 +48,9 @@ public class Dataframe {
         dataframe = new ArrayList<>();
         labels = new ArrayList<>();
         for (String colname : data.keySet()) {
-            dataframe.add(new Column(colname,"",data.get(colname))); 
+            String type = data.get(colname).get(0).getClass().toString();
+            type = type.substring(type.lastIndexOf('.') + 1);
+            dataframe.add(new Column(colname,type,data.get(colname))); 
             labels.add(colname);
         }
     }
@@ -283,49 +285,68 @@ public class Dataframe {
     }
     
    /**
-    * This method is used to compute the sum of a Dataframed column.
+    * This method is used to compute the sum of a Dataframe's column.
     * The column should contains number values only (Integer, Double or Float).
     * 
-    * @param label the name of the column  to extract
+    * @param label the name of the column
     * @return a double 
     * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
-    * @throws fr.devops.Exceptions.NotaNumberException if column is not a column of numbers.
+    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
     */
     public double sum(String label) throws LabelNotFoundException, NotaNumberException {
         if(!containsLabel(label))
-            throw new LabelNotFoundException(label+ "is not a column name");
+            throw new LabelNotFoundException(label+ " is not a column name");
         return Sum(getColumn(label));
     }
     
-       /**
-    * This method is used to compute the sum of a Dataframed column.
+   /**
+    * This method is used to compute the min of a Dataframe's column.
     * The column should contains number values only (Integer, Double or Float).
     * 
-    * @param label the name of the column  to extract
+    * @param label the name of the column
     * @return a double 
     * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
-    * @throws fr.devops.Exceptions.NotaNumberException if column is not a column of numbers.
+    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
     */
     public double min(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
-            throw new LabelNotFoundException(label+ "is not a column name");
+            throw new LabelNotFoundException(label+ " is not a column name");
         return Min(getColumn(label));
     }
-
+    
+   /**
+    * This method is used to compute the max of a Dataframe's column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param label the name of the column
+    * @return a double 
+    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
+    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
+    */
     public double max(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
-            throw new LabelNotFoundException(label+ "is not a column name");
+            throw new LabelNotFoundException(label+ " is not a column name");
         return Max(getColumn(label));
     }
-        
+    
+   /**
+    * This method is used to compute the mean of a Dataframe's column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param label the name of the column
+    * @return a double 
+    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
+    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
+    */
     public double mean(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
-            throw new LabelNotFoundException(label+ "is not a column name");
+            throw new LabelNotFoundException(label+ " is not a column name");
         return Mean(getColumn(label));
     }
     
+    
     public static void main(String[] args) throws Exception {
-        //Dataframe df = new Dataframe("src/main/ressources/M1.csv");
+        Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
         
         Map<String,List<?>> dataset;
         List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Sarah");
@@ -338,17 +359,17 @@ public class Dataframe {
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
-        Dataframe df = new Dataframe(dataset);
+        //Dataframe df = new Dataframe(dataset);
         
         df.fetchAll();
-        //System.out.println(df.getLabels());
-        //System.out.println(df.getTypes());
+        System.out.println(df.getLabels());
+        System.out.println(df.getTypes());
         //System.out.println("contains : "+df.containsLabel("moyenne"));
         
-        //System.out.println("min  : "+df.min("num Etudiant"));
-        //System.out.println("max  : "+df.max("num Etudiant"));
-        //System.out.println("sum  : "+df.sum("num Etudiant"));
-        System.out.println("mean : "+df.mean("num Etudiant"));
+        System.out.println("min  : "+df.min("Index"));
+        System.out.println("max  : "+df.max("Index"));
+        System.out.println("sum  : "+df.sum("Index"));
+        System.out.println("mean : "+df.mean("Index"));
         
         
     }

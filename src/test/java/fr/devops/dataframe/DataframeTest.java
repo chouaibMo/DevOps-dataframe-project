@@ -5,6 +5,8 @@
  */
 package fr.devops.dataframe;
 
+import fr.devops.Exceptions.LabelNotFoundException;
+import fr.devops.Exceptions.NotaNumberException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +29,7 @@ public class DataframeTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10);
     
-    private Dataframe students;
-    private Dataframe cities;
-    private Dataframe oscars;
-    private Dataframe trees;
+    private Dataframe students, cities, oscars;
     private static Map<String,List<?>> dataset;
     
     static List<String> prenom;
@@ -48,10 +47,10 @@ public class DataframeTest {
     
     @AfterClass
     public static void tearDownClass() {
-        prenom = null;
+        prenom      = null;
         numEtudiant = null;  
-        estAdmis = null;     
-        moyenne = null;
+        estAdmis    = null;     
+        moyenne     = null;
     }
     
     @Before
@@ -63,7 +62,6 @@ public class DataframeTest {
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
-        trees = new Dataframe("src/main/ressources/trees.csv");
         oscars = new Dataframe("src/main/ressources/oscars.csv");
         cities = new Dataframe("src/main/ressources/cities.csv");
         students = new Dataframe(dataset);
@@ -73,7 +71,6 @@ public class DataframeTest {
     @After
     public void tearDown() {
         dataset = null;
-        trees = null;
         oscars = null;
         cities = null;
         students = null;
@@ -85,7 +82,6 @@ public class DataframeTest {
     @Test
     public void testGetLabels() {
         assertEquals(students.getLabels().size(), 4);
-        assertEquals(trees.getLabels().size(), 4);
         assertEquals(oscars.getLabels().size(), 5);
         assertEquals(cities.getLabels().size(), 10); 
     }
@@ -96,7 +92,6 @@ public class DataframeTest {
     @Test
     public void testGetLabels2() {
         assertTrue(students.getLabels().equals(Arrays.asList("admis","prenom","num Etudiant","moyenne")));
-        assertTrue(trees.getLabels().equals(Arrays.asList("Index", "Girth (in)", "Height (ft)", "Volume(ft^3)")));
         assertTrue(oscars.getLabels().equals(Arrays.asList("Index", "Year", "Age", "Name", "Movie")));
         assertTrue(cities.getLabels().equals(Arrays.asList("LatD", "LatM", "LatS", "NS", "LonD", "LonM", "LonS", "EW", "City", "State")));
     }
@@ -131,7 +126,6 @@ public class DataframeTest {
     @Test
     public void testSize() {
         assertEquals(students.size(),6);
-        assertEquals(trees.size(),31);
         assertEquals(oscars.size(),89);
         assertEquals(cities.size(),128);
     }
@@ -210,6 +204,7 @@ public class DataframeTest {
 
     /**
      * Test of pop method, of class Dataframe.
+     * @throws java.lang.Exception
      */
     @Test
     public void testPop() throws Exception {
@@ -217,30 +212,121 @@ public class DataframeTest {
 
     /**
      * Test of sum method, of class Dataframe.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSum() throws Exception {
+        assertEquals(4005, oscars.sum("Index"),0.01);
+        assertEquals(74.58, students.sum("moyenne"),0.01);
+    }
+    
+    @Test(expected = LabelNotFoundException.class)
+    public void testSumLabelNotFoundException() throws Exception {
+        oscars.sum("test");
+        cities.sum("test");
+        students.sum("test");
+    }
+    
+    @Test(expected = NotaNumberException.class)
+    public void testSumNotaNumberException() throws Exception {
+        oscars.sum("Movie");
+        cities.sum("City");
+        students.sum("prenom");
     }
 
     /**
      * Test of min method, of class Dataframe.
+     * @throws java.lang.Exception
      */
     @Test
     public void testMin() throws Exception {
+        assertEquals(1,oscars.min("Index"),0.01);
+        assertEquals(9.45,students.min("moyenne"),0.01);
+    }
+    
+   /**
+     * Test of min method, of class Dataframe.
+     * @throws java.lang.Exception
+     */
+    @Test(expected = LabelNotFoundException.class)
+    public void testMinLabelNotFoundException() throws Exception {
+        oscars.min("test");
+        cities.min("test");
+        students.min("test");
+    }
+    
+   /**
+     * Test of min method, of class Dataframe.
+     * @throws java.lang.Exception
+     */
+    @Test(expected = NotaNumberException.class)
+    public void testMinNotaNumberException() throws Exception {
+        oscars.min("Movie");
+        cities.min("City");
+        students.min("prenom");
     }
 
     /**
      * Test of max method, of class Dataframe.
+     * @throws java.lang.Exception
      */
     @Test
     public void testMax() throws Exception {
+        assertEquals(89,oscars.max("Index"),0.01);
+        assertEquals(15.15,students.max("moyenne"),0.01);
+    }
+    
+   /**
+     * Test of min method, of class Dataframe.
+     * @throws java.lang.Exception
+     */
+    @Test(expected = LabelNotFoundException.class)
+    public void testMaxLabelNotFoundException() throws Exception {
+        oscars.max("test");
+        cities.max("test");
+        students.max("test");
+    }
+    
+   /**
+     * Test of min method, of class Dataframe.
+     * @throws java.lang.Exception
+     */
+    @Test(expected = NotaNumberException.class)
+    public void testMaxNotaNumberException() throws Exception {
+        oscars.max("Movie");
+        cities.max("City");
+        students.max("prenom");
     }
 
     /**
      * Test of mean method, of class Dataframe.
+     * @throws java.lang.Exception
      */
     @Test
     public void testMean() throws Exception {
+        assertEquals(45,oscars.mean("Index"),0.01);
+        assertEquals(12.43,students.mean("moyenne"),0.01);
     }
-   
+    
+   /**
+     * Test of min method, of class Dataframe.
+     * @throws java.lang.Exception
+     */
+    @Test(expected = LabelNotFoundException.class)
+    public void testMeanLabelNotFoundException() throws Exception {
+        oscars.mean("test");
+        cities.mean("test");
+        students.mean("test");
+    }
+    
+   /**
+     * Test of min method, of class Dataframe.
+     * @throws java.lang.Exception
+     */
+    @Test(expected = NotaNumberException.class)
+    public void testMeanNotaNumberException() throws Exception {
+        oscars.mean("Movie");
+        cities.mean("City");
+        students.mean("prenom");
+    }
 }

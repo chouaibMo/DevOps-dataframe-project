@@ -12,7 +12,7 @@ import java.util.List;
  * @author chouaib
  * @param <T>
  */
-public class Column<T> {
+public class Column<T extends Object>{
     
     private String name;
     private String type;
@@ -38,10 +38,10 @@ public class Column<T> {
     }
 
     public boolean isDigit(){
-        return( this.values.get(0) instanceof Integer || this.values.get(0) instanceof Double ||
-                this.values.get(0) instanceof Float   || this.getType().equals("Integer")     ||
-                this.getType().equals("Double" )      || this.getType().equals("Float"  )           
-              );
+        return( ( this.getType().equals("Integer")) ||
+                ( this.getType().equals("Double" )) ||
+                ( this.getType().equals("Float"  ))       
+            );
     }
     
     public boolean contains(T arg){

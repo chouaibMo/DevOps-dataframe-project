@@ -23,7 +23,7 @@ public class Statistics {
             return min;
         }
         else
-            throw new NotaNumberException("column values is not a list of numbers");
+            throw new NotaNumberException("column is not a list of numbers");
       }
       
     public static double Max(Column column) throws NotaNumberException{
@@ -35,7 +35,7 @@ public class Statistics {
             return max;
         }
         else
-            throw new NotaNumberException("column values is not a list of numbers");
+            throw new NotaNumberException("column is not a list of numbers");
     }
       
     public static double Sum(Column column) throws NotaNumberException{
@@ -46,7 +46,7 @@ public class Statistics {
             return sum;
         }
         else
-            throw new NotaNumberException("column values is not a list of numberse");
+            throw new NotaNumberException("column is not a list of numbers");
     }
       
     public static double Mean(Column column) throws NotaNumberException {
@@ -59,7 +59,7 @@ public class Statistics {
             return roundOff;
         }
         else
-            throw new NotaNumberException("column values is not a list of numbers");
+            throw new NotaNumberException("column is not a list of numbers");
     }
     
     
