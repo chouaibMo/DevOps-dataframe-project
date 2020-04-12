@@ -239,16 +239,7 @@ public class DataframeTest {
     @Test (expected = BadArgumentException.class)
     public void testInsertColumnBadArgumentException() throws Exception {
         Column col1 = null;
-        Column col2 = null;
-        
         emptyDf.insertColumn(col1);
-        assertEquals(emptyDf.getTypes().size(), 0);
-        assertEquals(emptyDf.getLabels().size(), 0);
-        
-        emptyDf.insertColumn(col2);
-        assertEquals(emptyDf.getTypes().size(), 0);
-        assertEquals(emptyDf.getLabels().size(), 0);
-        
     }
     
 
@@ -304,36 +295,44 @@ public class DataframeTest {
         assertEquals(emptyDf.getLabels().size(), 0);
     }
     
-    /**
+   /**
      * Test of dropColumn method, of class Dataframe.
      */
     @Test (expected = BadArgumentException.class)
     public void testDropColumnBadArgumentExeption() throws Exception {
-        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
-        
         emptyDf.dropColumn(0);
-        emptyDf.dropColumn(-1);
+    }
+    /**
+     * Test of dropColumn method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testDropColumnBadArgumentExeption2() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
         emptyDf.insertColumn(col);
         assertEquals(emptyDf.getLabels().size(),1);
         emptyDf.dropColumn(0);
         emptyDf.dropColumn(0);
     }
     
-        /**
+    
+    /**
      * Test of dropColumn method, of class Dataframe.
      */
     @Test (expected = LabelNotFoundException.class)
     public void testDropColumnLabelNotFoundException() throws Exception {
-        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
-        
         emptyDf.dropColumn("test");
-        System.out.println("suiiiiiiiite");
-        emptyDf.dropColumn("testcol");
+    }
+    
+    /**
+     * Test of dropColumn method, of class Dataframe.
+     */
+    @Test (expected = LabelNotFoundException.class)
+    public void testDropColumnLabelNotFoundException2() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
         emptyDf.insertColumn(col);
         assertEquals(emptyDf.getLabels().size(),1);
         assertTrue(emptyDf.containsLabel("testCol"));
         emptyDf.dropColumn("testCol");
-        assertEquals(emptyDf.getLabels().size(),1);
         emptyDf.dropColumn("testCol");
     }
 
@@ -348,14 +347,17 @@ public class DataframeTest {
         
         emptyDf.insertColumn(col1);
         emptyDf.insertColumn(col2);
+        assertEquals(emptyDf.getLabels().size(),2);
         
         Column c = emptyDf.pop();
         assertEquals(c, col2);
         assertEquals(c.getName(), "testCol2");
+        assertEquals(emptyDf.getLabels().size(),1);
         
         c = emptyDf.pop();
         assertEquals(c, col1);
         assertEquals(c.getName(), "testCol1");
+        assertEquals(emptyDf.getLabels().size(),0);
     }
     
     
@@ -368,6 +370,7 @@ public class DataframeTest {
         emptyDf.pop();
     }
 
+    
     /**
      * Test of sum method, of class Dataframe.
      * @throws java.lang.Exception

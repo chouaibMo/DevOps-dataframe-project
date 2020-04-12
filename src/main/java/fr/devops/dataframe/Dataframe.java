@@ -316,7 +316,7 @@ public class Dataframe {
     * @throws IllegalStateException if label if not a valid column name
     */
     public Column pop() throws IllegalStateException{
-        if(dataframe.size() == 0)
+        if(dataframe.isEmpty())
             throw new IllegalStateException("dataframe is empty");
         
         Column column = dataframe.get(dataframe.size()-1);
