@@ -36,6 +36,16 @@ public class Dataframe {
     
     private List<String> labels;
     private List<Column> dataframe;
+ 
+    
+   /**
+    * Default constructor : 
+    * To create an empty Dataframe 
+    */
+    public Dataframe(){
+        dataframe = new ArrayList<>();
+        labels = new ArrayList<>();
+    }
     
   /**
     * Constructor : 
@@ -116,6 +126,21 @@ public class Dataframe {
             }
         }   
         return false;
+    }
+    
+      /**
+    * This method returns the index of a column in the Dataframe
+    * 
+    * @param label a column name
+    * @return returns the index of the column in the Dataframe. -1 if label is not in the dataframe
+    * 
+    */
+    public int indexOfLabel(String label){
+        for(int i=0; i< dataframe.size();i++)
+            if(dataframe.get(i).getName().equals(label))
+                return i;
+         
+        return -1;
     }
     
   /**
@@ -243,22 +268,29 @@ public class Dataframe {
     * This method is used to insert a column in a Dataframed.
     * 
     * @param column the column to insert
-    * @throws Exception
+    * @throws BadArgumentException if column is null
     */
-    public void insertColumn(Column column) throws Exception{
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+    public void insertColumn(Column column) throws BadArgumentException{
+        if(column == null)
+            throw new BadArgumentException("column should not be null");
+        dataframe.add(column);
+        labels.add(column.getName());
     }
     
   /**
     * This method is used to remove a column from a Dataframed.
     * 
     * @param label the column to remove
-    * @throws Exception
+    * @throws LabelNotFoundException
     */
-    public void dropColumn(String label) throws Exception{
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+    public void dropColumn(String label) throws LabelNotFoundException{
+        if(dataframe.isEmpty())
+            throw new LabelNotFoundException("dataframe is empty");
+        if(!containsLabel(label))
+            throw new LabelNotFoundException(label+ " is not a valid column name");
+        
+        dataframe.remove(indexOfLabel(label));
+        labels.remove(label);
     }
     
      /**
@@ -268,20 +300,27 @@ public class Dataframe {
     * @throws Exception
     */
     public void dropColumn(int index) throws Exception{
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+        if(index < 0 || index < dataframe.size())
+            throw new BadArgumentException("dataframe is empty");
+        
+        dataframe.remove(index);
+        labels.remove(index);
     }
     
   /**
     * This method is used to extract a column from a Dataframed.
     * 
-    * @param label the name of the column  to extract
     * @return a column object
-    * @throws Exception if label if not a valid column name
+    * @throws IllegalStateException if label if not a valid column name
     */
-    public Column pop(String label) throws Exception{
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+    public Column pop() throws IllegalStateException{
+        if(dataframe.isEmpty())
+            throw new IllegalStateException("dataframe is empty");
+        
+        Column column = dataframe.get(dataframe.size()-1);
+        dataframe.remove(dataframe.size()-1);
+        labels.remove(dataframe.size()-1);
+        return column;
     }
     
    /**
@@ -295,7 +334,7 @@ public class Dataframe {
     */
     public double sum(String label) throws LabelNotFoundException, NotaNumberException {
         if(!containsLabel(label))
-            throw new LabelNotFoundException(label+ " is not a column name");
+            throw new LabelNotFoundException(label+ " is not a valid column name");
         return Sum(getColumn(label));
     }
     
@@ -310,7 +349,7 @@ public class Dataframe {
     */
     public double min(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
-            throw new LabelNotFoundException(label+ " is not a column name");
+            throw new LabelNotFoundException(label+ " is not a valid column name");
         return Min(getColumn(label));
     }
     
@@ -325,7 +364,7 @@ public class Dataframe {
     */
     public double max(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
-            throw new LabelNotFoundException(label+ " is not a column name");
+            throw new LabelNotFoundException(label+ " is not a valid column name");
         return Max(getColumn(label));
     }
     
@@ -340,7 +379,7 @@ public class Dataframe {
     */
     public double mean(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
-            throw new LabelNotFoundException(label+ " is not a column name");
+            throw new LabelNotFoundException(label+ " is not a valid column name");
         return Mean(getColumn(label));
     }
     
@@ -361,16 +400,19 @@ public class Dataframe {
         
         //Dataframe df = new Dataframe(dataset);
         
-        df.fetchAll();
+        //df.fetchAll();
         System.out.println(df.getLabels());
         System.out.println(df.getTypes());
         //System.out.println("contains : "+df.containsLabel("moyenne"));
         
-        System.out.println("min  : "+df.min("Index"));
-        System.out.println("max  : "+df.max("Index"));
-        System.out.println("sum  : "+df.sum("Index"));
-        System.out.println("mean : "+df.mean("Index"));
-        
+        //System.out.println("min  : "+df.min("Index"));
+        //System.out.println("max  : "+df.max("Index"));
+        //System.out.println("sum  : "+df.sum("Index"));
+        //System.out.println("mean : "+df.mean("Index"));
+        System.out.println();
+        df.dropColumn("Name"); 
+        System.out.println(df.getLabels());
+        System.out.println(df.getTypes());
         
     }
     

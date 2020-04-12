@@ -29,7 +29,7 @@ public class DataframeTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10);
     
-    private Dataframe students, cities, oscars;
+    private Dataframe students, cities, oscars, emptyDf;
     private static Map<String,List<?>> dataset;
     
     static List<String> prenom;
@@ -65,6 +65,7 @@ public class DataframeTest {
         oscars = new Dataframe("src/main/ressources/oscars.csv");
         cities = new Dataframe("src/main/ressources/cities.csv");
         students = new Dataframe(dataset);
+        emptyDf = new Dataframe();
         
     }
     
@@ -75,12 +76,25 @@ public class DataframeTest {
         cities = null;
         students = null;
     }
+    
+    
+    /**
+     * Test of size method, of class Dataframe.
+     */
+    @Test
+    public void testSize() {
+        //assertEquals(emptyDf.size(),0);
+        assertEquals(students.size(),6);
+        assertEquals(oscars.size(),89);
+        assertEquals(cities.size(),128);
+    }
 
     /**
      * Test of getLabels method, of class Dataframe.
      */
     @Test
     public void testGetLabels() {
+        assertEquals(emptyDf.getLabels().size(), 0);
         assertEquals(students.getLabels().size(), 4);
         assertEquals(oscars.getLabels().size(), 5);
         assertEquals(cities.getLabels().size(), 10); 
@@ -91,17 +105,10 @@ public class DataframeTest {
      */
     @Test
     public void testGetLabels2() {
+        assertTrue(emptyDf.getLabels().isEmpty());
         assertTrue(students.getLabels().equals(Arrays.asList("admis","prenom","num Etudiant","moyenne")));
         assertTrue(oscars.getLabels().equals(Arrays.asList("Index", "Year", "Age", "Name", "Movie")));
         assertTrue(cities.getLabels().equals(Arrays.asList("LatD", "LatM", "LatS", "NS", "LonD", "LonM", "LonS", "EW", "City", "State")));
-    }
-
-   /**
-     * Test of getLabels method, of class Dataframe.
-     */
-    @Test
-    public void testGetLabels3() {
-        
     }
     
    /**
@@ -109,7 +116,21 @@ public class DataframeTest {
      */
     @Test
     public void testGetTypes() {
-        
+        assertTrue(emptyDf.getTypes().isEmpty());        
+        assertTrue(students.getTypes().equals(Arrays.asList("Boolean", "String","Integer","Double")));        
+        assertTrue(cities.getTypes().equals(Arrays.asList("Integer", "Integer", "Integer","Character", "Integer", "Integer","Integer","Character","String","String")));
+        assertTrue(oscars.getTypes().equals(Arrays.asList("Integer", "Integer", "Integer","String", "String")));
+    }
+    
+   /**
+     * Test of getTypes method, of class Dataframe.
+     */
+    @Test
+    public void testGetTypes2() {
+        assertEquals(emptyDf.getTypes().size(), 0);
+        assertEquals(students.getTypes().size(), 4);
+        assertEquals(oscars.getTypes().size(), 5);
+        assertEquals(cities.getTypes().size(), 10); 
     }
     
     /**
@@ -117,20 +138,31 @@ public class DataframeTest {
      */
     @Test
     public void testContainsLabel() {
- 
-    }
-
-    /**
-     * Test of size method, of class Dataframe.
-     */
-    @Test
-    public void testSize() {
-        assertEquals(students.size(),6);
-        assertEquals(oscars.size(),89);
-        assertEquals(cities.size(),128);
+        assertTrue(students.containsLabel("prenom"));
+        assertTrue(students.containsLabel("num Etudiant"));
+        assertTrue(cities.containsLabel("City"));
+        assertTrue(cities.containsLabel("State"));
+        assertTrue(oscars.containsLabel("Year"));
+        assertTrue(oscars.containsLabel("Movie"));
+        
     }
     
+   /**
+     * Test of containsLabel method, of class Dataframe.
+     */
+    @Test
+    public void testContainsLabel2() {
+        assertFalse(emptyDf.containsLabel("test"));
+        assertFalse(emptyDf.containsLabel("test"));
+        assertFalse(students.containsLabel("test"));
+        assertFalse(students.containsLabel("numEtudiant"));
+        assertFalse(cities.containsLabel("Cities"));
+        assertFalse(cities.containsLabel("States"));
+        assertFalse(oscars.containsLabel("Years"));
+        assertFalse(oscars.containsLabel("Movies"));
+    }
 
+    
     /**
      * Test of getColumn method, of class Dataframe.
      */
@@ -186,13 +218,55 @@ public class DataframeTest {
      */
     @Test
     public void testInsertColumn() throws Exception {
+    /*    Column col1 = new Column("testCol1","NewType1",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","NewType2",  Arrays.asList(1, 2));
+        
+        emptyDf.insertColumn(col1);
+        assertEquals(emptyDf.getTypes().size(), 1);
+        assertEquals(emptyDf.getLabels().size(), 1);
+        assertTrue(emptyDf.getLabels().contains("NewType1"));
+        
+        emptyDf.insertColumn(col2);
+        assertEquals(emptyDf.getTypes().size(), 2);
+        assertEquals(emptyDf.getLabels().size(), 2);
+        assertTrue(emptyDf.getLabels().contains("NewType2"));
+        */
     }
+    
+        /**
+     * Test of insertColumn method, of class Dataframe.
+     */
+    @Test
+    public void testInsertColumnException() throws Exception {
+    /*    Column col1 = new Column("testCol1","NewType1",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","NewType2",  Arrays.asList(1, 2));
+        
+        emptyDf.insertColumn(col1);
+        assertEquals(emptyDf.getTypes().size(), 1);
+        assertEquals(emptyDf.getLabels().size(), 1);
+        assertTrue(emptyDf.getLabels().contains("NewType1"));
+        
+        emptyDf.insertColumn(col2);
+        assertEquals(emptyDf.getTypes().size(), 2);
+        assertEquals(emptyDf.getLabels().size(), 2);
+        assertTrue(emptyDf.getLabels().contains("NewType2"));
+        */
+    }
+    
 
     /**
      * Test of dropColumn method, of class Dataframe.
      */
     @Test
     public void testDropColumn_String() throws Exception {
+    /*    Column col = new Column("testCol","NewType",  Arrays.asList(1, 2));
+        emptyDf.insertColumn(col);
+        
+        assertTrue(emptyDf.getLabels().contains("NewType"));
+        assertEquals(emptyDf.getLabels().size(), 1);
+        
+        emptyDf.dropColumn("testCol");
+    */
     }
 
     /**
