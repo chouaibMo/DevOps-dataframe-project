@@ -5,6 +5,7 @@
  */
 package fr.devops.dataframe;
 
+import fr.devops.Exceptions.BadArgumentException;
 import fr.devops.Exceptions.LabelNotFoundException;
 import fr.devops.Exceptions.NotaNumberException;
 import java.util.Arrays;
@@ -218,39 +219,36 @@ public class DataframeTest {
      */
     @Test
     public void testInsertColumn() throws Exception {
-    /*    Column col1 = new Column("testCol1","NewType1",  Arrays.asList(1, 2));
-        Column col2 = new Column("testCol2","NewType2",  Arrays.asList(1, 2));
+        Column col1 = new Column("testCol1","Integer",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2));
         
         emptyDf.insertColumn(col1);
         assertEquals(emptyDf.getTypes().size(), 1);
         assertEquals(emptyDf.getLabels().size(), 1);
-        assertTrue(emptyDf.getLabels().contains("NewType1"));
+        assertTrue(emptyDf.getLabels().contains("testCol1"));
         
         emptyDf.insertColumn(col2);
         assertEquals(emptyDf.getTypes().size(), 2);
         assertEquals(emptyDf.getLabels().size(), 2);
-        assertTrue(emptyDf.getLabels().contains("NewType2"));
-        */
+        assertTrue(emptyDf.getLabels().contains("testCol2"));
     }
     
-        /**
+    /**
      * Test of insertColumn method, of class Dataframe.
      */
-    @Test
-    public void testInsertColumnException() throws Exception {
-    /*    Column col1 = new Column("testCol1","NewType1",  Arrays.asList(1, 2));
-        Column col2 = new Column("testCol2","NewType2",  Arrays.asList(1, 2));
+    @Test (expected = BadArgumentException.class)
+    public void testInsertColumnBadArgumentException() throws Exception {
+        Column col1 = null;
+        Column col2 = null;
         
         emptyDf.insertColumn(col1);
-        assertEquals(emptyDf.getTypes().size(), 1);
-        assertEquals(emptyDf.getLabels().size(), 1);
-        assertTrue(emptyDf.getLabels().contains("NewType1"));
+        assertEquals(emptyDf.getTypes().size(), 0);
+        assertEquals(emptyDf.getLabels().size(), 0);
         
         emptyDf.insertColumn(col2);
-        assertEquals(emptyDf.getTypes().size(), 2);
-        assertEquals(emptyDf.getLabels().size(), 2);
-        assertTrue(emptyDf.getLabels().contains("NewType2"));
-        */
+        assertEquals(emptyDf.getTypes().size(), 0);
+        assertEquals(emptyDf.getLabels().size(), 0);
+        
     }
     
 
@@ -259,14 +257,17 @@ public class DataframeTest {
      */
     @Test
     public void testDropColumn_String() throws Exception {
-    /*    Column col = new Column("testCol","NewType",  Arrays.asList(1, 2));
-        emptyDf.insertColumn(col);
+        Column col1 = new Column("testCol1","Integer",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2));
         
-        assertTrue(emptyDf.getLabels().contains("NewType"));
+        emptyDf.insertColumn(col1);
+        emptyDf.insertColumn(col2);
+        
+        emptyDf.dropColumn("testCol1");
         assertEquals(emptyDf.getLabels().size(), 1);
-        
-        emptyDf.dropColumn("testCol");
-    */
+        emptyDf.dropColumn("testCol2");
+        assertEquals(emptyDf.getLabels().size(), 0);
+    
     }
 
     /**
@@ -274,6 +275,66 @@ public class DataframeTest {
      */
     @Test
     public void testDropColumn_int() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2));
+        
+        emptyDf.insertColumn(col);
+        emptyDf.insertColumn(col2);
+        
+        emptyDf.dropColumn(0);
+        assertEquals(emptyDf.getLabels().size(), 1);
+        emptyDf.dropColumn(0);
+        assertEquals(emptyDf.getLabels().size(), 0);
+    }
+    
+    /**
+     * Test of dropColumn method, of class Dataframe.
+     */
+    @Test
+    public void testDropColumn_int2() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2));
+        
+        emptyDf.insertColumn(col);
+        emptyDf.insertColumn(col2);
+        
+        emptyDf.dropColumn(1);
+        assertEquals(emptyDf.getLabels().size(), 1);
+        emptyDf.dropColumn(0);
+        assertEquals(emptyDf.getLabels().size(), 0);
+    }
+    
+    /**
+     * Test of dropColumn method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testDropColumnBadArgumentExeption() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        
+        emptyDf.dropColumn(0);
+        emptyDf.dropColumn(-1);
+        emptyDf.insertColumn(col);
+        assertEquals(emptyDf.getLabels().size(),1);
+        emptyDf.dropColumn(0);
+        emptyDf.dropColumn(0);
+    }
+    
+        /**
+     * Test of dropColumn method, of class Dataframe.
+     */
+    @Test (expected = LabelNotFoundException.class)
+    public void testDropColumnLabelNotFoundException() throws Exception {
+        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        
+        emptyDf.dropColumn("test");
+        System.out.println("suiiiiiiiite");
+        emptyDf.dropColumn("testcol");
+        emptyDf.insertColumn(col);
+        assertEquals(emptyDf.getLabels().size(),1);
+        assertTrue(emptyDf.containsLabel("testCol"));
+        emptyDf.dropColumn("testCol");
+        assertEquals(emptyDf.getLabels().size(),1);
+        emptyDf.dropColumn("testCol");
     }
 
     /**
@@ -282,6 +343,29 @@ public class DataframeTest {
      */
     @Test
     public void testPop() throws Exception {
+        Column col1 = new Column("testCol1","Integer",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2, 3));
+        
+        emptyDf.insertColumn(col1);
+        emptyDf.insertColumn(col2);
+        
+        Column c = emptyDf.pop();
+        assertEquals(c, col2);
+        assertEquals(c.getName(), "testCol2");
+        
+        c = emptyDf.pop();
+        assertEquals(c, col1);
+        assertEquals(c.getName(), "testCol1");
+    }
+    
+    
+    /**
+     * Test of pop method, of class Dataframe.
+     * @throws IllegalStateException
+     */
+    @Test (expected = IllegalStateException.class)
+    public void testPopIllegalStateException() throws Exception {
+        emptyDf.pop();
     }
 
     /**

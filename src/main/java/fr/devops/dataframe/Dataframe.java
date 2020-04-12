@@ -90,6 +90,14 @@ public class Dataframe {
                 dataframe.get(i).getValues().add(row[i]);
     }
  
+      /**
+    * This method returns the size of the Dataframe object
+    * 
+    * @return int returns the size of the Dataframe.
+    */
+    public int size() {
+        return dataframe.get(0).getValues().size();
+    }
     
   /**
     * This method returns a list of a Dataframe labels
@@ -142,15 +150,7 @@ public class Dataframe {
          
         return -1;
     }
-    
-  /**
-    * This method returns the size of the Dataframe object
-    * 
-    * @return int returns the size of the Dataframe.
-    */
-    public int size() {
-        return dataframe.get(0).getValues().size();
-    }
+   
     
   /**
     * This method returns the size of the Dataframe object
@@ -297,11 +297,13 @@ public class Dataframe {
     * This method is used to remove a column from a Dataframed.
     * 
     * @param index the column to remove
-    * @throws Exception
+    * @throws BadArgumentException
     */
-    public void dropColumn(int index) throws Exception{
-        if(index < 0 || index < dataframe.size())
+    public void dropColumn(int index) throws BadArgumentException{
+        if(dataframe.isEmpty())
             throw new BadArgumentException("dataframe is empty");
+        if(index < 0 || index > dataframe.size())
+            throw new BadArgumentException(index+" is not a valid column index");
         
         dataframe.remove(index);
         labels.remove(index);
@@ -314,12 +316,12 @@ public class Dataframe {
     * @throws IllegalStateException if label if not a valid column name
     */
     public Column pop() throws IllegalStateException{
-        if(dataframe.isEmpty())
+        if(dataframe.size() == 0)
             throw new IllegalStateException("dataframe is empty");
         
         Column column = dataframe.get(dataframe.size()-1);
-        dataframe.remove(dataframe.size()-1);
         labels.remove(dataframe.size()-1);
+        dataframe.remove(dataframe.size()-1);
         return column;
     }
     
@@ -401,19 +403,38 @@ public class Dataframe {
         //Dataframe df = new Dataframe(dataset);
         
         //df.fetchAll();
-        System.out.println(df.getLabels());
-        System.out.println(df.getTypes());
+        //System.out.println(df.getLabels());
+        //System.out.println(df.getTypes());
         //System.out.println("contains : "+df.containsLabel("moyenne"));
         
         //System.out.println("min  : "+df.min("Index"));
         //System.out.println("max  : "+df.max("Index"));
         //System.out.println("sum  : "+df.sum("Index"));
         //System.out.println("mean : "+df.mean("Index"));
-        System.out.println();
-        df.dropColumn("Name"); 
-        System.out.println(df.getLabels());
-        System.out.println(df.getTypes());
+        //System.out.println();
+        //df.dropColumn("Name"); 
+        //System.out.println(df.getLabels());
+        //System.out.println(df.getTypes());
         
+        Dataframe emptyDf = new Dataframe();
+        Column col1 = new Column("testCol1","Integer",  Arrays.asList(1, 2));
+        Column col2 = new Column("testCol2","Integer",  Arrays.asList(1, 2, 3));
+        
+        System.out.println("avant insert : "+emptyDf.dataframe.size());
+        emptyDf.insertColumn(col1);
+        emptyDf.insertColumn(col2);
+        
+        System.out.println("apres insert : "+emptyDf.dataframe.size());
+        
+        Column c = emptyDf.pop();
+        System.out.println(c.equals(col2));
+        System.out.println(c.getName());
+        System.out.println("apres 1 pop  : "+emptyDf.dataframe.size());
+        
+        c = emptyDf.pop();
+        System.out.println("avant insert : "+emptyDf.dataframe.size());
+        System.out.println(c.equals(col1));
+        System.out.println(c.getName());
     }
     
 }
