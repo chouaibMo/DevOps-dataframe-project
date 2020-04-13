@@ -50,7 +50,7 @@
                       <shadedArtifactAttached>true</shadedArtifactAttached>
                       <transformers>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                          <mainClass>fr.devops.dataframe.Dataframe</mainClass>
+                          <mainClass>fr.devops.main.Main</mainClass>
                         </transformer>
                       </transformers>
                     </configuration>
@@ -75,7 +75,7 @@
                    <artifactId>exec-maven-plugin</artifactId>
                    <version>1.6.0</version>
                    <configuration>
-                           <mainClass>fr.devops.dataframe.Dataframe</mainClass>
+                           <mainClass>fr.devops.main.Main</mainClass>
                    </configuration>
             </plugin>
             

@@ -12,7 +12,7 @@ import fr.devops.dataframe.Column;
  *
  * @author chouaib
  */
-public class Statistics {
+public final class Statistics {
     
     public static double Min(Column column) throws NotaNumberException{
         if( column.isDigit() ){
@@ -20,7 +20,9 @@ public class Statistics {
             for(int i=0; i<column.getValues().size(); i++)
                 if (min > Float.parseFloat(column.getValues().get(i).toString()))
                     min = Float.parseFloat( column.getValues().get(i).toString() );
-            return min;
+            //return min;
+            double roundOff = Math.round(min* 100.0) / 100.0;
+            return roundOff;
         }
         else
             throw new NotaNumberException("column is not a list of numbers");
@@ -32,7 +34,9 @@ public class Statistics {
             for(int i=0; i<column.getValues().size(); i++)
                 if (max < Float.parseFloat(column.getValues().get(i).toString()))
                   max = Float.parseFloat( column.getValues().get(i).toString() );
-            return max;
+            //return max;
+            double roundOff = Math.round(max* 100.0) / 100.0;
+            return roundOff;
         }
         else
             throw new NotaNumberException("column is not a list of numbers");
@@ -43,7 +47,9 @@ public class Statistics {
             double sum = 0;
             for(int i=0; i<column.getValues().size(); i++)
                     sum += Double.parseDouble( column.getValues().get(i).toString() );
-            return sum;
+            //return sum;
+            double roundOff = Math.round(sum* 100.0) / 100.0;
+            return roundOff;
         }
         else
             throw new NotaNumberException("column is not a list of numbers");

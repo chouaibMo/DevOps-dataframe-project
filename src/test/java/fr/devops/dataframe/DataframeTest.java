@@ -457,6 +457,7 @@ public class DataframeTest {
     
     /**
      * Test of pop method, of class Dataframe.
+     * @throws java.lang.Exception
      * @throws IllegalStateException
      */
     @Test (expected = IllegalStateException.class)

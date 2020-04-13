@@ -3,14 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.devops.operations;
+package fr.devops.dataframe;
 
-import fr.devops.dataframe.Dataframe;
+import java.util.List;
 
 /**
  *
  * @author chouaib
  */
-public final class Arithmetics {
+public class Row {
+    List<?> row;
     
+    
+    public Row(String...value){
+        
+    }
 }

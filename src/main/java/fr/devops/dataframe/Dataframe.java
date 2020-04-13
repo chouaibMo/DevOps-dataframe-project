@@ -52,15 +52,30 @@ public class Dataframe {
     * To create a Dataframe from a Map data structure,
     * That contains a strings as key and list of objects as value.
     * 
-    * @param data the Map of labels and its corresponding list of values.
+     * @param dataset
+     * @throws fr.devops.Exceptions.BadArgumentException if dataset is null, empty or has different column sizes.
     */
-    public Dataframe(Map<String,List<?>> data){
+    public Dataframe(Map<String,List<?>> dataset) throws BadArgumentException{
+        if(dataset == null)
+            throw new BadArgumentException("dataset Map is null");
+        if(dataset.isEmpty())
+            throw new BadArgumentException("dataset Map is empty");      
+        
+        List<List<?>> columns = new ArrayList<>(dataset.values());
+        int size = columns.get(0).size();
+        
+        for(List<?> list : columns){
+            if( list == null)
+                throw new BadArgumentException("dataset contains a null list");
+            else if( list.size() != size)
+                throw new BadArgumentException("dataset columns has not the same size");
+        }     
         dataframe = new ArrayList<>();
         labels = new ArrayList<>();
-        for (String colname : data.keySet()) {
-            String type = data.get(colname).get(0).getClass().toString();
+        for (String colname : dataset.keySet()) {
+            String type = dataset.get(colname).get(0).getClass().toString();
             type = type.substring(type.lastIndexOf('.') + 1);
-            dataframe.add(new Column(colname,type,data.get(colname))); 
+            dataframe.add(new Column(colname,type,dataset.get(colname))); 
             labels.add(colname);
         }
     }
@@ -203,7 +218,7 @@ public class Dataframe {
     * @exception BadArgumentException if nbLine is invalid 
     */
     public void fetchFromTo(int start, int end) throws BadArgumentException{
-        if(start < 0 || start > size() )       //|| end < 0 || end > size() || )
+        if(start < 0 || start > size() )
             throw new BadArgumentException("start");
         if(end < 0 || end > size()) 
             throw new BadArgumentException("end");
@@ -385,23 +400,26 @@ public class Dataframe {
         return Mean(getColumn(label));
     }
     
-  
-    public static void main(String[] args) throws Exception {
-        //Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
-        Map<String,List<?>> dataset;
-        List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Sarah");
-        List<Integer> numEtudiant  = Arrays.asList(10, 11, 15, 9, 2, 6);    
-        List<Boolean> estAdmis = Arrays.asList(false, true, true, true, false, true);      
-        List<Double> moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15); 
-        dataset = new HashMap<>();
-        dataset.put("prenom", prenom);
-        dataset.put("num Etudiant", numEtudiant);
-        dataset.put("admis", estAdmis);
-        dataset.put("moyenne", moyenne);
+       /**
+    * This method is used to compute the mean of a Dataframe's column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param label the name of the column
+    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
+    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
+    */
+    public void stats(String label) throws LabelNotFoundException, NotaNumberException{
+        String[] str = { "Min", "Max", "Sum", "Mean"};
+        Double[] val = {min(label), max(label), sum(label), mean(label) };
         
-        Dataframe df = new Dataframe(dataset);
-        
-        df.fetchAll();
+        AsciiTable at = new AsciiTable();
+        at.addRule();
+        at.addRow(str);
+        at.addRule();
+        at.addRow(val);
+        at.addRule();
+        at.setTextAlignment(TextAlignment.CENTER);
+        at.getContext().setGrid(A7_Grids.minusBarPlusEquals());
+        System.out.println(at.render());
     }
-    
 }
