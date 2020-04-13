@@ -1,0 +1,9 @@
+fr/devops/main/Main.class
+fr/devops/Exceptions/LabelNotFoundException.class
+fr/devops/dataframe/Column.class
+fr/devops/Exceptions/NotaNumberException.class
+fr/devops/dataframe/Row.class
+fr/devops/dataframe/Dataframe.class
+fr/devops/operations/Statistics.class
+fr/devops/operations/Arithmetics.class
+fr/devops/Exceptions/BadArgumentException.class

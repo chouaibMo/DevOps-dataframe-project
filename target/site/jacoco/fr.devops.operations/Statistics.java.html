@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Statistics.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DataFrame</a> &gt; <a href="index.source.html" class="el_package">fr.devops.operations</a> &gt; <span class="el_source">Statistics.java</span></div><h1>Statistics.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package fr.devops.operations;
+
+import fr.devops.Exceptions.NotaNumberException;
+import fr.devops.dataframe.Column;
+
+/**
+ *
+ * @author chouaib
+ */
+<span class="nc" id="L15">public final class Statistics {</span>
+    
+    public static double Min(Column column) throws NotaNumberException{
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        if( column.isDigit() ){</span>
+<span class="fc" id="L19">            double min = Float.MAX_VALUE;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">            for(int i=0; i&lt;column.getValues().size(); i++)</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">                if (min &gt; Float.parseFloat(column.getValues().get(i).toString()))</span>
+<span class="fc" id="L22">                    min = Float.parseFloat( column.getValues().get(i).toString() );</span>
+            //return min;
+<span class="fc" id="L24">            double roundOff = Math.round(min* 100.0) / 100.0;</span>
+<span class="fc" id="L25">            return roundOff;</span>
+        }
+        else
+<span class="fc" id="L28">            throw new NotaNumberException(&quot;column is not a list of numbers&quot;);</span>
+      }
+      
+    public static double Max(Column column) throws NotaNumberException{
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if( column.isDigit()){</span>
+<span class="fc" id="L33">            double max = Float.MIN_VALUE;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            for(int i=0; i&lt;column.getValues().size(); i++)</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">                if (max &lt; Float.parseFloat(column.getValues().get(i).toString()))</span>
+<span class="fc" id="L36">                  max = Float.parseFloat( column.getValues().get(i).toString() );</span>
+            //return max;
+<span class="fc" id="L38">            double roundOff = Math.round(max* 100.0) / 100.0;</span>
+<span class="fc" id="L39">            return roundOff;</span>
+        }
+        else
+<span class="fc" id="L42">            throw new NotaNumberException(&quot;column is not a list of numbers&quot;);</span>
+    }
+      
+    public static double Sum(Column column) throws NotaNumberException{
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if( column.isDigit()){</span>
+<span class="fc" id="L47">            double sum = 0;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            for(int i=0; i&lt;column.getValues().size(); i++)</span>
+<span class="fc" id="L49">                    sum += Double.parseDouble( column.getValues().get(i).toString() );</span>
+            //return sum;
+<span class="fc" id="L51">            double roundOff = Math.round(sum* 100.0) / 100.0;</span>
+<span class="fc" id="L52">            return roundOff;</span>
+        }
+        else
+<span class="fc" id="L55">            throw new NotaNumberException(&quot;column is not a list of numbers&quot;);</span>
+    }
+      
+    public static double Mean(Column column) throws NotaNumberException {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if( column.isDigit()){</span>
+<span class="fc" id="L60">            double sum = 0;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            for(int i=0; i&lt;column.getValues().size(); i++)</span>
+<span class="fc" id="L62">                    sum += Double.parseDouble( column.getValues().get(i).toString() );</span>
+            
+<span class="fc" id="L64">            double roundOff = Math.round(sum/column.getValues().size()* 100.0) / 100.0;</span>
+<span class="fc" id="L65">            return roundOff;</span>
+        }
+        else
+<span class="fc" id="L68">            throw new NotaNumberException(&quot;column is not a list of numbers&quot;);</span>
+    }
+    
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
