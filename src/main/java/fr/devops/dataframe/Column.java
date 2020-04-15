@@ -48,4 +48,8 @@ public class Column<T extends Object>{
         return values.contains(arg);
         
     }
+    
+    public void addValue(T val){
+        this.values.add(val);
+    }
 }

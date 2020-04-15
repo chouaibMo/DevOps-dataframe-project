@@ -8,6 +8,7 @@ package fr.devops.dataframe;
 import fr.devops.Exceptions.BadArgumentException;
 import fr.devops.Exceptions.LabelNotFoundException;
 import fr.devops.Exceptions.NotaNumberException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -40,10 +41,10 @@ public class DataframeTest {
     
     @BeforeClass
     public static void setUpClass() throws Exception {
-        prenom = Arrays.asList("Léa", "Claude", "Tony", "Emma", "Ali", "Sarah");
-        numEtudiant = Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982);   
-        estAdmis = Arrays.asList(false, true, true, true, false, true);      
-        moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15); 
+        prenom = new ArrayList<String>(Arrays.asList("Léa", "Claude", "Tony", "Emma", "Ali", "Sarah"));
+        numEtudiant = new ArrayList<Integer>(Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982));   
+        estAdmis = new ArrayList<Boolean>(Arrays.asList(false, true, true, true, false, true));      
+        moyenne = new ArrayList<Double>(Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15)); 
     }
     
     @AfterClass
@@ -77,16 +78,88 @@ public class DataframeTest {
         students = null;
     }
     
+    /**
+     * Test of constructor, of class Dataframe.
+     * Columns of different sizes
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testConstructor() throws Exception{
+        Dataframe df = new Dataframe("src/main/ressources/generateException.csv");
+    }
     
     /**
-     * Test of size method, of class Dataframe.
+     * Test of constructor, of class Dataframe.
+     * Columns of different sizes
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testConstructor2() throws Exception{
+        List<Integer> list1  = Arrays.asList(1, 2, 3);        
+        List<Integer> list2 = Arrays.asList(4, 5); 
+        
+        dataset = new HashMap<>();
+        dataset.put("list1", list1);
+        dataset.put("list2", list2);
+        
+        Dataframe df = new Dataframe(dataset);
+    }
+    
+    /**
+     * Test of constructor, of class Dataframe.
+     * a null column
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testConstructor3() throws Exception{
+        List<Integer> list1  = Arrays.asList(1, 2, 3);        
+        List<Integer> list2 = null; 
+        
+        dataset = new HashMap<>();
+        dataset.put("list1", list1);
+        dataset.put("list2", list2);
+        
+        Dataframe df = new Dataframe(dataset);
+    }
+    
+    /**
+     * Test of constructor, of class Dataframe.
+     * Null dataset
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testConstructor4() throws Exception{
+        dataset = null;
+        Dataframe df = new Dataframe(dataset);
+    }
+    
+    /**
+     * Test of constructor, of class Dataframe.
+     * Null dataset
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testConstructor5() throws Exception{
+        dataset = new HashMap<>();
+        Dataframe df = new Dataframe(dataset);
+    }
+    
+    
+    /**
+     * Test of nbRows method, of class Dataframe.
      */
     @Test
-    public void testSize() {
-        //assertEquals(emptyDf.size(),0);
-        assertEquals(students.size(),6);
-        assertEquals(oscars.size(),89);
-        assertEquals(cities.size(),128);
+    public void testnbRows() {
+        assertEquals(emptyDf.nbRows(),0);
+        assertEquals(students.nbRows(),6);
+        assertEquals(oscars.nbRows(),89);
+        assertEquals(cities.nbRows(),128);
+    }
+    
+   /**
+     * Test of nbColumns method, of class Dataframe.
+     */
+    @Test
+    public void testnbColumns() {
+        assertEquals(emptyDf.nbColumns(),0);
+        assertEquals(students.nbColumns(),4);
+        assertEquals(oscars.nbColumns(),5);
+        assertEquals(cities.nbColumns(),10);
     }
     
    /**
@@ -247,6 +320,7 @@ public class DataframeTest {
      */
     @Test
     public void testFetchAll() throws Exception {
+        students.fetchAll();
     }
 
     /**
@@ -254,13 +328,72 @@ public class DataframeTest {
      */
     @Test
     public void testFetchFromTo() throws Exception {
+        students.fetchFromTo(0,students.nbRows());
+    }
+    
+    /**
+     * Test of fetchFromTo method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testFetchFromToException1() throws Exception {
+        students.fetchFromTo(-1,4);
+    }
+    
+    /**
+     * Test of fetchFromTo method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testFetchFromToException2() throws Exception {
+        students.fetchFromTo(1,7);
+    }
+    
+    /**
+     * Test of fetchFromTo method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testFetchFromToException3() throws Exception {
+        students.fetchFromTo(5,3);
+    }
+    
+   /**
+     * Test of fetchFromTo method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testFetchFromToException4() throws Exception {
+        students.fetchFromTo(8,3);
+    }
+    
+       /**
+     * Test of fetchFromTo method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testFetchFromToException5() throws Exception {
+        students.fetchFromTo(8,3);
     }
 
     /**
      * Test of head method, of class Dataframe.
      */
-    @Test
+    @Test 
     public void testHead() throws Exception {
+        students.head(1); 
+    }
+    
+    /**
+     * Test of head method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testHeadException1() throws Exception {
+        students.head(-1); 
+        students.head(7); 
+    }
+    
+    /**
+     * Test of head method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testHeadException2() throws Exception {
+        students.head(7); 
     }
 
     /**
@@ -268,13 +401,50 @@ public class DataframeTest {
      */
     @Test
     public void testTail() throws Exception {
+        students.tail(1); 
+    }
+    
+    /**
+     * Test of tail method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testTailException1() throws Exception {
+        students.tail(-1);
+    }
+    
+    /**
+     * Test of tail method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testTailException2() throws Exception {
+        students.tail(7);
     }
 
-    /**
+   /**
      * Test of insertRow method, of class Dataframe.
      */
     @Test
     public void testInsertRow() throws Exception {
+        assertEquals(6, students.nbRows());
+        assertEquals(89, oscars.nbRows());
+        
+        String[] row1 = {"true", "toto", "1000", "12.5"};
+        String[] row2 = {"90", "2020", "43", "test test", "test"};
+        
+        students.insertRow(row1);
+        oscars.insertRow(row2);
+        
+        assertEquals(7, students.nbRows());
+        assertEquals(90, oscars.nbRows());
+    }
+    
+   /**
+     * Test of insertRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testInsertRowException() throws Exception {
+        String[] row1 = {"toto", "1000", "12.5"};
+        students.insertRow(row1);
     }
 
     /**
@@ -432,7 +602,6 @@ public class DataframeTest {
 
     /**
      * Test of pop method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test
     public void testPop() throws Exception {
@@ -457,8 +626,6 @@ public class DataframeTest {
     
     /**
      * Test of pop method, of class Dataframe.
-     * @throws java.lang.Exception
-     * @throws IllegalStateException
      */
     @Test (expected = IllegalStateException.class)
     public void testPopIllegalStateException() throws Exception {
@@ -468,7 +635,6 @@ public class DataframeTest {
     
     /**
      * Test of sum method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test
     public void testSum() throws Exception {
@@ -492,7 +658,6 @@ public class DataframeTest {
 
     /**
      * Test of min method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test
     public void testMin() throws Exception {
@@ -502,7 +667,6 @@ public class DataframeTest {
     
    /**
      * Test of min method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test(expected = LabelNotFoundException.class)
     public void testMinLabelNotFoundException() throws Exception {
@@ -513,7 +677,6 @@ public class DataframeTest {
     
    /**
      * Test of min method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test(expected = NotaNumberException.class)
     public void testMinNotaNumberException() throws Exception {
@@ -524,7 +687,6 @@ public class DataframeTest {
 
     /**
      * Test of max method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test
     public void testMax() throws Exception {
@@ -534,7 +696,6 @@ public class DataframeTest {
     
    /**
      * Test of min method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test(expected = LabelNotFoundException.class)
     public void testMaxLabelNotFoundException() throws Exception {
@@ -545,7 +706,6 @@ public class DataframeTest {
     
    /**
      * Test of min method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test(expected = NotaNumberException.class)
     public void testMaxNotaNumberException() throws Exception {
@@ -556,7 +716,6 @@ public class DataframeTest {
 
     /**
      * Test of mean method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test
     public void testMean() throws Exception {
@@ -566,7 +725,6 @@ public class DataframeTest {
     
    /**
      * Test of min method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test(expected = LabelNotFoundException.class)
     public void testMeanLabelNotFoundException() throws Exception {
@@ -577,12 +735,27 @@ public class DataframeTest {
     
    /**
      * Test of min method, of class Dataframe.
-     * @throws java.lang.Exception
      */
     @Test(expected = NotaNumberException.class)
     public void testMeanNotaNumberException() throws Exception {
         oscars.mean("Movie");
         cities.mean("City");
         students.mean("prenom");
+    }
+    
+   /**
+     * Test of stats method, of class Dataframe.
+     */
+    @Test(expected = LabelNotFoundException.class)
+    public void teststatsLabelNotFoundException() throws Exception {
+        students.printStats("test");
+    }
+    
+     /**
+     * Test of stats method, of class Dataframe.
+     */
+    @Test(expected = NotaNumberException.class)
+    public void teststatsNotANumberException() throws Exception {
+        students.printStats("prenom");
     }
 }

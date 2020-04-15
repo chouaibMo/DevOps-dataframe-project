@@ -1,0 +1,6 @@
+Boolean ,   String   ,   Integer      ,   Double
+admis   ,   prenom   ,  num Etudiant  ,   moyenne      
+false   ,   Léa      ,    118823      ,     1.0        
+true    ,   Claude   ,    112893      ,     1.0        
+true    ,   Régis    ,    112534      ,     1.0        
+true    ,   Emma

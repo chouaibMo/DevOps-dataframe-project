@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import static fr.devops.operations.Statistics.*;
-import java.util.Arrays;
-import java.util.HashMap;
 
 /**
 * Dataframe Model Object.
@@ -36,6 +34,7 @@ public class Dataframe {
     
     private List<String> labels;
     private List<Column> dataframe;
+    private int nbRows;
  
     
    /**
@@ -45,6 +44,7 @@ public class Dataframe {
     public Dataframe(){
         dataframe = new ArrayList<>();
         labels = new ArrayList<>();
+        nbRows = 0;
     }
     
   /**
@@ -78,6 +78,7 @@ public class Dataframe {
             dataframe.add(new Column(colname,type,dataset.get(colname))); 
             labels.add(colname);
         }
+        nbRows = size;
     }
     
   /**
@@ -89,7 +90,7 @@ public class Dataframe {
     * @throws FileNotFoundException if the path is not correct
     * @throws IOException if reading the file generates an error
     */
-    public Dataframe(String path) throws FileNotFoundException, IOException {
+    public Dataframe(String path) throws FileNotFoundException, IOException, BadArgumentException {
         dataframe = new ArrayList<>();
         labels = new ArrayList<>();
         CSVReader csvReader = new CSVReader(new FileReader(path));
@@ -103,15 +104,29 @@ public class Dataframe {
         for (String[] row : lines) 
             for (int i=0; i<row.length;i++) 
                 dataframe.get(i).getValues().add(row[i]);
+        
+        nbRows = dataframe.get(0).getValues().size();
+        for(Column col : dataframe)
+            if(nbRows != col.getValues().size() )
+                throw new BadArgumentException("columns in csv file should have the same size");
     }
  
-      /**
-    * This method returns the size of the Dataframe object
+   /**
+    * This method returns the number of rows in the Dataframe.
     * 
-    * @return int returns the size of the Dataframe.
+    * @return int returns the number of rows in the Dataframe.
     */
-    public int size() {
-        return dataframe.get(0).getValues().size();
+    public int nbRows() {
+        return this.nbRows;
+    }
+    
+   /**
+    * This method returns the number of columns in the Dataframe.
+    * 
+    * @return int returns the number of rows in the Dataframe.
+    */
+    public int nbColumns() {
+        return this.labels.size();
     }
     
   /**
@@ -151,7 +166,7 @@ public class Dataframe {
         return false;
     }
     
-      /**
+  /**
     * This method returns the index of a column in the Dataframe
     * 
     * @param label a column name
@@ -206,7 +221,7 @@ public class Dataframe {
     * @throws fr.devops.Exceptions.BadArgumentException
     */
     public void fetchAll() throws BadArgumentException{
-        fetchFromTo(0,size());
+        fetchFromTo(0,nbRows());
     }
     
   /**
@@ -217,10 +232,10 @@ public class Dataframe {
     * @param end  the row where .
     * @exception BadArgumentException if nbLine is invalid 
     */
-    public void fetchFromTo(int start, int end) throws BadArgumentException{
-        if(start < 0 || start > size() )
+    protected void fetchFromTo(int start, int end) throws BadArgumentException{
+        if(start < 0 || start > nbRows() )
             throw new BadArgumentException("start");
-        if(end < 0 || end > size()) 
+        if(end < 0 || end > nbRows()) 
             throw new BadArgumentException("end");
         if(start > end) 
             throw new BadArgumentException("start shoud be <= end");
@@ -250,7 +265,7 @@ public class Dataframe {
     * @throws BadArgumentException if nbLine is invalid 
     */
     public void head(int nbline) throws BadArgumentException {
-        if(nbline < 0 || nbline > size())
+        if(nbline < 0 || nbline > nbRows())
             throw new BadArgumentException("number of lines");
         fetchFromTo(0, nbline);
     }
@@ -263,20 +278,26 @@ public class Dataframe {
     * @throws BadArgumentException if nbLine is invalid 
     */
     public void tail(int nbline) throws BadArgumentException {
-        if(nbline < 0 || nbline > size())
+        if(nbline < 0 || nbline > nbRows())
             throw new BadArgumentException("number of lines");
-        fetchFromTo(size()-nbline,size());
+        fetchFromTo(nbRows()-nbline,nbRows());
     }
 
   /**
     * This method is used to insert a row in a Dataframed.
     * 
     * @param row the row to insert
-    * @throws Exception
+    * @throws BadArgumentException
     */
-    public void insertRow(List<Object> row) throws Exception{
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+    public void insertRow(String[] row) throws BadArgumentException{
+        if(row.length != this.labels.size())
+            throw new BadArgumentException("the row should contain "+this.labels.size()+" elements");
+        
+        for(int i=0; i<this.labels.size(); i++){
+            this.dataframe.get(i).addValue(row[i]);
+        }
+        this.nbRows++;
+            
     }
     
   /**
@@ -401,14 +422,14 @@ public class Dataframe {
     }
     
        /**
-    * This method is used to compute the mean of a Dataframe's column.
+    * This method is used to display stats of a Dataframe's column.
     * The column should contains number values only (Integer, Double or Float).
     * 
     * @param label the name of the column
     * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
     * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
     */
-    public void stats(String label) throws LabelNotFoundException, NotaNumberException{
+    public void printStats(String label) throws LabelNotFoundException, NotaNumberException{
         String[] str = { "Min", "Max", "Sum", "Mean"};
         Double[] val = {min(label), max(label), sum(label), mean(label) };
         

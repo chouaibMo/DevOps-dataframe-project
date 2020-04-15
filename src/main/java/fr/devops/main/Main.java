@@ -6,6 +6,7 @@
 package fr.devops.main;
 
 import fr.devops.dataframe.Dataframe;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -18,21 +19,35 @@ import java.util.Map;
 public class Main {
   
     public static void main(String[] args) throws Exception {
-        //Dataframe df = new Dataframe("src/main/ressources/oscars.csv");
+        //Dataframe df = new Dataframe("src/main/ressources/M1.csv");
         Map<String,List<?>> dataset;
-        List<String> prenom = Arrays.asList("Léa", "Claude", "Régis", "Emma", "Ali", "Sarah");
-        List<Integer> numEtudiant  = Arrays.asList(10, 11, 15, 9, 2, 6);    
-        List<Boolean> estAdmis = Arrays.asList(false, true, true, true, false, true);      
-        List<Double> moyenne = Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15); 
+        List<String> prenom = new ArrayList<>();
+        prenom.add("kopp");
+        
+        List<Integer> numEtudiant  = new ArrayList<>();
+        numEtudiant.add(2);
+        
+        List<Boolean> estAdmis = new ArrayList<>();
+        estAdmis.add(Boolean.TRUE);
+        
+        List<Double> moyenne = new ArrayList<>();
+        moyenne.add(10.0);
+        
         dataset = new HashMap<>();
+        
         dataset.put("prenom", prenom);
         dataset.put("num Etudiant", numEtudiant);
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
         Dataframe df = new Dataframe(dataset);
+        String[] input = {"true", "chouaib", "1", "10.5"};
+        df.insertRow(input);
+        df.fetchAll();
+        
+        df.dropColumn("prenom");
+        
         
         df.fetchAll();
-        df.stats("moyenne");
     }
 }
