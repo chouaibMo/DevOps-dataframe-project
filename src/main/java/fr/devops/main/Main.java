@@ -19,35 +19,26 @@ import java.util.Map;
 public class Main {
   
     public static void main(String[] args) throws Exception {
-        //Dataframe df = new Dataframe("src/main/ressources/M1.csv");
-        Map<String,List<?>> dataset;
-        List<String> prenom = new ArrayList<>();
-        prenom.add("kopp");
+        List<String> prenom = new ArrayList<>(Arrays.asList("Léa", "Claude", "Tony", "Emma", "Ali", "Sarah"));
+        List<Integer> numEtudiant = new ArrayList<>(Arrays.asList(118823, 112893, 112534, 113090, 115368, 114982));   
+        List<Boolean> estAdmis = new ArrayList<>(Arrays.asList(false, true, true, true, false, true));      
+        List<Double> moyenne = new ArrayList<>(Arrays.asList(9.73, 13.28, 12.07, 14.90, 9.45, 15.15)); 
         
-        List<Integer> numEtudiant  = new ArrayList<>();
-        numEtudiant.add(2);
-        
-        List<Boolean> estAdmis = new ArrayList<>();
-        estAdmis.add(Boolean.TRUE);
-        
-        List<Double> moyenne = new ArrayList<>();
-        moyenne.add(10.0);
-        
-        dataset = new HashMap<>();
+        Map<String,List<?>> dataset = new HashMap<>();
         
         dataset.put("prenom", prenom);
         dataset.put("num Etudiant", numEtudiant);
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
-        Dataframe df = new Dataframe(dataset);
-        String[] input = {"true", "chouaib", "1", "10.5"};
-        df.insertRow(input);
-        df.fetchAll();
+        Dataframe df1 = new Dataframe(dataset);
+        Dataframe df2 = new Dataframe("src/main/ressources/oscars.csv");
         
-        df.dropColumn("prenom");
+        System.out.println("\n\t\t\t\tSTUDENTS DATAFRAME : \n");
+        df1.fetchAll();
+        System.out.println("\n\n");
         
-        
-        df.fetchAll();
+        System.out.println("\t\t\t\tOSCARS DATAFRAME : \n");
+        df2.fetchAll();
     }
 }
