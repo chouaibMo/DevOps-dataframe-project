@@ -30,7 +30,7 @@ public class StatisticsTest {
     
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10);
-    static Column Prenom, Numero, Admis, Moyenne, Taille;
+    static Column<?> Prenom, Numero, Admis, Moyenne, Taille;
     
     
     @BeforeClass
@@ -41,11 +41,11 @@ public class StatisticsTest {
         List<Double> moyenne = Arrays.asList(9.85, 8.53, 12.77, 13.20, 9.20, 10.58);             //sum 60 mean 10   min 8 max 12
         List<Float> taille = Arrays.asList(1.60f, 1.70f, 1.90f, 1.50f, 1.80f, 1.60f); 
         
-        Prenom  = new Column("prenom" , "String" , prenom);
-        Numero  = new Column("numero" , "Integer", numero);
-        Admis   = new Column("Admis"  , "Boolean", estAdmis);
-        Moyenne = new Column("moyenne", "Double" , moyenne);   
-        Taille = new Column("taille"  , "Float" , taille); 
+        Prenom  = new Column<>("prenom" , "String" , prenom);
+        Numero  = new Column<>("numero" , "Integer", numero);
+        Admis   = new Column<>("Admis"  , "Boolean", estAdmis);
+        Moyenne = new Column<>("moyenne", "Double" , moyenne);   
+        Taille = new Column<>("taille"  , "Float" , taille); 
     }
     
     @AfterClass
@@ -64,17 +64,23 @@ public class StatisticsTest {
     public void tearDown() {
     }
 
+   /**
+     * Test of Min method, of class Statistics.
+     */
+    @Test (expected = RuntimeException.class)
+    public void testConstructor() throws Exception {
+        Statistics stat = new Statistics();
+    }
+    
+    
     /**
      * Test of Min method, of class Statistics.
-     * @throws java.lang.Exception
      */
     @Test
     public void testMin() throws Exception {
         assertEquals(8.53, Min(Moyenne), 0.01);
         assertEquals(2.  , Min(Numero),0.01);
         assertEquals(1.50, Min(Taille),0.01);
-        
-        
     }
     
     @Test(expected = NotaNumberException.class)

@@ -14,6 +14,10 @@ import fr.devops.dataframe.Column;
  */
 public final class Statistics {
     
+    Statistics(){
+        throw new RuntimeException("this class should'nt be instantiated.");
+    }
+    
     public static double Min(Column column) throws NotaNumberException{
         if( column.isDigit() ){
             double min = Float.MAX_VALUE;

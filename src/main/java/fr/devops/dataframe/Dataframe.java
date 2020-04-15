@@ -55,6 +55,7 @@ public class Dataframe {
      * @param dataset
      * @throws fr.devops.Exceptions.BadArgumentException if dataset is null, empty or has different column sizes.
     */
+
     public Dataframe(Map<String,List<?>> dataset) throws BadArgumentException{
         if(dataset == null)
             throw new BadArgumentException("dataset Map is null");
@@ -75,7 +76,7 @@ public class Dataframe {
         for (String colname : dataset.keySet()) {
             String type = dataset.get(colname).get(0).getClass().toString();
             type = type.substring(type.lastIndexOf('.') + 1);
-            dataframe.add(new Column(colname,type,dataset.get(colname))); 
+            dataframe.add(new Column<>(colname,type,dataset.get(colname))); 
             labels.add(colname);
         }
         nbRows = size;
@@ -83,13 +84,14 @@ public class Dataframe {
     
   /**
     * Constructor : 
-    * To create a Dataframe from a dataset csv file.
-    * All types of separators are allowed (openCSV library used).
+    * To create a Dataframe from a dataset csv file.All types of separators are allowed (openCSV library used).
     * 
     * @param path the path to the csv file.
     * @throws FileNotFoundException if the path is not correct
     * @throws IOException if reading the file generates an error
+    * @throws fr.devops.Exceptions.BadArgumentException
     */
+    @SuppressWarnings("unchecked")
     public Dataframe(String path) throws FileNotFoundException, IOException, BadArgumentException {
         dataframe = new ArrayList<>();
         labels = new ArrayList<>();
@@ -106,7 +108,7 @@ public class Dataframe {
                 dataframe.get(i).getValues().add(row[i]);
         
         nbRows = dataframe.get(0).getValues().size();
-        for(Column col : dataframe)
+        for(Column<?> col : dataframe)
             if(nbRows != col.getValues().size() )
                 throw new BadArgumentException("columns in csv file should have the same size");
     }
@@ -289,6 +291,7 @@ public class Dataframe {
     * @param row the row to insert
     * @throws BadArgumentException
     */
+    @SuppressWarnings("unchecked")
     public void insertRow(String[] row) throws BadArgumentException{
         if(row.length != this.labels.size())
             throw new BadArgumentException("the row should contain "+this.labels.size()+" elements");

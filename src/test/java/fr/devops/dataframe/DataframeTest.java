@@ -26,6 +26,7 @@ import org.junit.rules.Timeout;
  *
  * @author chouaib
  */
+@SuppressWarnings("unchecked")
 public class DataframeTest {
     
     @Rule
@@ -178,7 +179,7 @@ public class DataframeTest {
      */
     @Test
     public void testIndexOfLabel2() throws Exception {
-        Column col = new Column("testCol","Integer",  Arrays.asList(1, 2));
+        Column<?> col = new Column<>("testCol","Integer",  Arrays.asList(1, 2));
         assertEquals(oscars.indexOfLabel("Index"),0);
         oscars.dropColumn("Age");
         assertEquals(oscars.indexOfLabel("Name"),2);
@@ -363,12 +364,21 @@ public class DataframeTest {
         students.fetchFromTo(8,3);
     }
     
-       /**
+   /**
      * Test of fetchFromTo method, of class Dataframe.
      */
     @Test (expected = BadArgumentException.class)
     public void testFetchFromToException5() throws Exception {
         students.fetchFromTo(8,3);
+        students.fetchFromTo(3,-1);
+    }
+    
+   /**
+     * Test of fetchFromTo method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testFetchFromToException6() throws Exception {
+        students.fetchFromTo(3,-1);
     }
 
     /**
@@ -742,7 +752,14 @@ public class DataframeTest {
         cities.mean("City");
         students.mean("prenom");
     }
-    
+   
+   /**
+     * Test of stats method, of class Dataframe.
+     */
+    @Test
+    public void teststats() throws Exception {
+        students.printStats("moyenne");
+    }
    /**
      * Test of stats method, of class Dataframe.
      */

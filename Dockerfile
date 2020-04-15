@@ -1,7 +1,7 @@
 FROM openjdk:8-jre-alpine
 
-ADD /target/DataFrame-1.0-SNAPSHOT-shaded.jar dataframe.jar
+ADD /target/DataFrame-1.0-SNAPSHOT-shaded.jar /home/dataframe.jar
 
-ENV CLASSPATH src/main/ressources/
+ADD /src/main/ressources/ /home/.
 
-ENTRYPOINT ["java","-jar","dataframe.jar"]
+ENTRYPOINT java -jar /home/dataframe.jar "/home/oscars.csv"

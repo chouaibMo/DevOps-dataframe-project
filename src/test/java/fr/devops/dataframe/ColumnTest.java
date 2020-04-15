@@ -20,6 +20,7 @@ import org.junit.rules.Timeout;
  *
  * @author chouaib
  */
+@SuppressWarnings("unchecked")
 public class ColumnTest {
     
     @Rule

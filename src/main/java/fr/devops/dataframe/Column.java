@@ -12,6 +12,7 @@ import java.util.List;
  * @author chouaib
  * @param <T>
  */
+@SuppressWarnings("unchecked")
 public class Column<T extends Object>{
     
     private String name;
