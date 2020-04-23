@@ -12,7 +12,7 @@ L’objectif de ce projet est d'implémenter une sous-partie des fonctionnalité
 
 ## Documentation : Javadoc
 La documentation java de cette bibliothèque peut facilement etre génerée en executant la commande suivante à la racine du projet : 
-```bash
+```sh
 mvn javadoc:javadoc
 ```
 Vous trouverez la documentation génerée par cette commande dans le repertoire target/site/apidocs.
@@ -83,7 +83,7 @@ De plus, 2 dépendances maven sont utilisées :
 - **OpenCSV 3.8**      : Pour simplifier la lecture des fichiers csv (plus d'info sur http://opencsv.sourceforge.net)
 - **Asciitable 0.3.2** : Pour afficher proprement le dataframe sous forme de tableau (plus d'infos sur https://github.com/vdmeer/asciitable)
 
-On utilise également le plugin maven `**maven-shade-plugin**` pour génerer un jar executable pour lancer le main de démontration (pour plus d'infos http://maven.apache.org/plugins/maven-shade-plugin/)
+On utilise également le plugin maven `maven-shade-plugin` pour génerer un jar executable pour lancer le main de démontration (pour plus d'infos http://maven.apache.org/plugins/maven-shade-plugin/)
 
 ## Docker image - Docker Hub
 
@@ -93,26 +93,27 @@ On utilise également le plugin maven `**maven-shade-plugin**` pour génerer un 
 ## Mode d'emploi
 
 Pour lancer les tests unitaire, executer la commande suivante à la racine du projet :
-```bash
-mvn test
+```sh
+$ mvn test
 ```
 Pour lancer les tests unitaire et génerer le jar, executer la commande suivante à la racine du projet :
-```bash
-mvn package
+```sh
+$ mvn package
 ```
-Pour lancer le main de demonstration, il faut choisir un fichier csv dans le répertoire src/main/ressources/ (file.csv par exemple) et executer ensuite une des commandes suivantes à la racine du projet :
-```bash
-mvn exec:java -Dexec.args="src/main/ressources/file.csv"
+Pour lancer le main de demonstration, il faut choisir un fichier csv dans le répertoire `src/main/ressources/` (file.csv par exemple) et executer ensuite une des commandes suivantes à la racine du projet :
+```sh
+$ mvn exec:java -Dexec.args="src/main/ressources/file.csv"
 ```
-```bash
-java -jar target/DataframeMain.jar src/main/ressources/file.csv
+```sh
+$ java -jar target/DataframeMain.jar src/main/ressources/file.csv
 ```
 
 Pour génerer la javadoc, executer la commande suivante à la racine du projet :
 
-```bash
-mvn javadoc:javadoc
+```sh
+$ mvn javadoc:javadoc
 ```
 ## FeedBack
 
+-
 -
