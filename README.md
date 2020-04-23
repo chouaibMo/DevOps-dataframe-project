@@ -1,4 +1,4 @@
- <h1 align=center> DevOpsProject </h1>
+ <h1 align=center> DevOps Project : Dataframe</h1>
 
 [![Build Status](https://travis-ci.com/chouaibMo/DevOpsProject.svg?branch=master)](https://travis-ci.com/chouaibMo/DevOpsProject)
 [![codecov](https://codecov.io/gh/chouaibMo/DevOpsProject/branch/master/graph/badge.svg)](https://codecov.io/gh/chouaibMo/DevOpsProject)
@@ -38,22 +38,22 @@ Quelques fichiers csv sont disponibles dans le répertoire `src/main/ressources/
 
 ### 2- Ajout/Suppression de données dans un Dataframe
 La bibliothèque fournis différentes techniques pour modifier le contenu d'un Dataframe :
-```
-- Suppression d'une colonne suivant son index : dropColumn(int)
-- Suppression d'une colonne suivant son label : dropColumn(String)
-- Suppression de la dernière colonne du Dataframe : pop()
-- Insertion d'un colonne : insertColumn(Column)
-- Insertion d'une ligne  : insertRow(String[])
-```
+
+- Suppression d'une colonne suivant son index : `dropColumn(int)`
+- Suppression d'une colonne suivant son label : `dropColumn(String)`
+- Suppression de la dernière colonne du Dataframe : `pop()`
+- Insertion d'un colonne : `insertColumn(Column)`
+- Insertion d'une ligne  : `insertRow(String[])`
+
 
 ### 3- Affichage d'un Dataframe
 Il existe 4 manières différentes pour afficher le contenu d'un Dataframe :
-```
+
 - Afficher le contenu intégral     : `fetchAll`
 - Afficher le contenu d'un interval: `fetchFromTo(int,int)`
 - Afficher les n premières lignes  : `head(int)`
 - Afficher les n dernières lignes  : `tail(int)`
-```
+
 ### 4- Sélections dans un Dataframe
 Il existe 2 manières différentes pour réaliser une selection dans un Dataframe.
 Le résultat de la sélection est un nouveau Dataframe : 
@@ -63,12 +63,12 @@ Le résultat de la sélection est un nouveau Dataframe :
 
 ### 5- Fonctions statistiques sur un Dataframe
 Il existe 4 fonctions statistiques, applicables sur les colonnes numériques d'un Dataframe (Integer, Double ou Float). Ces fonctions prennent en parametre le nom (label) d'une colonne : 
-```
+
 - Le minimum : `min(String)`
 - Le maximum : `max(String)`
 - La somme   : `sum(String)`
 - La moyenne : `mean(String)`
-```
+
 La fonction printStats permet d'afficher le resultat de ces fonctions sous forme d'un tableau.
 
 ## Description des outils utilisés
@@ -93,7 +93,7 @@ On utilise également le plugin maven `maven-shade-plugin` pour génerer un jar 
 -
 -
 
-## Mode d'emploi
+## Execution
 
 Pour lancer les tests unitaire, executer la commande suivante à la racine du projet :
 ```sh
