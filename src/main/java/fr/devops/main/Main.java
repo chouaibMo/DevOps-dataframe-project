@@ -44,11 +44,11 @@ public class Main {
         /* Dataframe from csv file */
         
         Dataframe df2 = new Dataframe(args[0]);
-        System.out.println("\t\t\t\tOSCARS DATAFRAME : \n");
+        System.out.println("\t\t\t\tCSV FILE DATAFRAME : \n");
         df2.fetchAll();
-        System.out.println("\n\t\t\t\tSTATS OF COLUMN : AGE\n");
-        df2.printStats("Age");
-        System.out.println("");
+        //System.out.println("\n\t\t\t\tSTATS OF COLUMN : AGE\n");
+        //df2.printStats("Age");
+        //System.out.println("");
             
         
     }
