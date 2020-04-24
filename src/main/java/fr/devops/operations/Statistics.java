@@ -9,7 +9,7 @@ import fr.devops.Exceptions.NotaNumberException;
 import fr.devops.dataframe.Column;
 
 /**
- *
+ * This class contains statistic functions applicable to a numeric column
  * @author chouaib
  */
 public final class Statistics {
@@ -18,6 +18,13 @@ public final class Statistics {
         throw new RuntimeException("this class should'nt be instantiated.");
     }
     
+   /**
+    * This method is used to compute the min value of a column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param column column to compute it's min
+    * @throws NotaNumberException if the column is not a column of numbers.
+    */
     public static double Min(Column column) throws NotaNumberException{
         if( column.isDigit() ){
             double min = Float.MAX_VALUE;
@@ -32,6 +39,14 @@ public final class Statistics {
             throw new NotaNumberException("column is not a list of numbers");
       }
       
+    
+   /**
+    * This method is used to compute the max value of a column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param column column to compute it's max
+    * @throws NotaNumberException if the column is not a column of numbers.
+    */
     public static double Max(Column column) throws NotaNumberException{
         if( column.isDigit()){
             double max = Float.MIN_VALUE;
@@ -46,6 +61,14 @@ public final class Statistics {
             throw new NotaNumberException("column is not a list of numbers");
     }
       
+    
+   /**
+    * This method is used to compute the sum value of a column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param column column to compute it's sum
+    * @throws NotaNumberException if the column is not a column of numbers.
+    */
     public static double Sum(Column column) throws NotaNumberException{
         if( column.isDigit()){
             double sum = 0;
@@ -59,6 +82,14 @@ public final class Statistics {
             throw new NotaNumberException("column is not a list of numbers");
     }
       
+    
+   /**
+    * This method is used to compute the average value of a column.
+    * The column should contains number values only (Integer, Double or Float).
+    * 
+    * @param column column to compute it's average
+    * @throws NotaNumberException if the column is not a column of numbers.
+    */
     public static double Mean(Column column) throws NotaNumberException {
         if( column.isDigit()){
             double sum = 0;

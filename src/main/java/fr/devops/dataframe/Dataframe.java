@@ -22,9 +22,7 @@ import java.util.Map;
 import static fr.devops.operations.Statistics.*;
 
 /**
-* Dataframe Model Object.
-* 
-* This class represents a Dataframe
+* This class represents a Dataframe object
 *  
 * @author chouaib
 * @version 1.0
@@ -47,15 +45,13 @@ public class Dataframe {
         nbRows = 0;
     }
     
-  /**
-    * Constructor : 
-    * To create a Dataframe from a Map data structure,
+   /**
+    * Create a Dataframe from a Map data structure,
     * That contains a strings as key and list of objects as value.
     * 
-     * @param dataset
-     * @throws fr.devops.Exceptions.BadArgumentException if dataset is null, empty or has different column sizes.
+    * @param dataset a Map that contains the data
+    * @throws BadArgumentException if dataset is null, empty or has different column sizes.
     */
-
     public Dataframe(Map<String,List<?>> dataset) throws BadArgumentException{
         if(dataset == null)
             throw new BadArgumentException("dataset Map is null");
@@ -83,13 +79,12 @@ public class Dataframe {
     }
     
   /**
-    * Constructor : 
-    * To create a Dataframe from a dataset csv file.All types of separators are allowed (openCSV library used).
+    * Create a Dataframe from a dataset csv file.All types of separators are allowed (openCSV library used).
     * 
     * @param path the path to the csv file.
     * @throws FileNotFoundException if the path is not correct
     * @throws IOException if reading the file generates an error
-    * @throws fr.devops.Exceptions.BadArgumentException
+    * @throws BadArgumentException if the csv file contains columns of different sizes
     */
     @SuppressWarnings("unchecked")
     public Dataframe(String path) throws FileNotFoundException, IOException, BadArgumentException {
@@ -115,7 +110,6 @@ public class Dataframe {
  
    /**
     * This method returns the number of rows in the Dataframe.
-    * 
     * @return int returns the number of rows in the Dataframe.
     */
     public int nbRows() {
@@ -124,7 +118,6 @@ public class Dataframe {
     
    /**
     * This method returns the number of columns in the Dataframe.
-    * 
     * @return int returns the number of rows in the Dataframe.
     */
     public int nbColumns() {
@@ -133,16 +126,22 @@ public class Dataframe {
     
   /**
     * This method returns a list of a Dataframe labels
-    * 
     * @return returns a list of String corresponding to Dataframe labels.
     */
     public List<String> getLabels(){
         return this.labels;
     }
     
+   /**
+    * This method set the labels list of a Dataframe
+     * @param labels a list of strings
+    */
+    public void setLabels(List<String> labels){
+        this.labels = labels;
+    }
+    
   /**
     * This method returns a list of the types of a Dataframe columns
-    * 
     * @return returns a list of String corresponding to Dataframe types.
     */
     public List<String> getTypes(){
@@ -155,7 +154,6 @@ public class Dataframe {
     
   /**
     * This method is used to check if a label (axis) already exists
-    * 
     * @param label an axis name
     * @return returns true if Dataframe contains the label, false otherwise
     */
@@ -168,9 +166,8 @@ public class Dataframe {
         return false;
     }
     
-  /**
+   /**
     * This method returns the index of a column in the Dataframe
-    * 
     * @param label a column name
     * @return returns the index of the column in the Dataframe. -1 if label is not in the dataframe
     * 
@@ -181,15 +178,33 @@ public class Dataframe {
                 return i;
          
         return -1;
-    }
-   
+    }  
     
-  /**
-    * This method returns the size of the Dataframe object
+   /**
+    * returns the row associated to the index in parameter.
+    * index should be equals or greater than 0 and less than Dataframe's size.
     * 
-    * @param label
-    * @return int returns the size of the Dataframe.
-    * @throws fr.devops.Exceptions.LabelNotFoundException
+    * @param index the row index
+    * @return the row numb
+    */
+    public List<String> getRow(int index) throws BadArgumentException{
+        if(index < 0 || index > nbRows() )
+            throw new BadArgumentException("index");
+        
+        ArrayList<String> row = new ArrayList<>();
+        for(Column col : this.dataframe)
+            row.add(col.getValues().get(index).toString());
+        
+        return row;
+    }
+    
+   /**
+    * returns a column of the Dataframe using it's label.
+    * index should be equals or greater than 0 and less than Dataframe's size.
+    * 
+    * @param label the column name
+    * @return the column associated to the parameter
+    * @throws LabelNotFoundException if label is not a valid column name
     */
     public Column getColumn(String label) throws LabelNotFoundException {
         if(!containsLabel(label))
@@ -204,11 +219,11 @@ public class Dataframe {
     }
     
   /**
-    * This method returns a column of the Dataframe from it's index.
+    * This method returns a column of the Dataframe using it's index.
     * index should be equals or greater than 0 and less than Dataframe's size.
-    *
-    * @param index 
-    * @return int returns the size of the Dataframe.
+    * 
+    * @param index the column id in the dataframe
+    * @return the column associated to the parameter
     * @throws BadArgumentException if index if greater than Dataframe size
     */
     public Column getColumn(int index) throws BadArgumentException{
@@ -219,8 +234,9 @@ public class Dataframe {
     }
 
   /**
-    * This method is used to display all the rows of a Dataframe.The rows are printed line by line in stdout.
-    * @throws fr.devops.Exceptions.BadArgumentException
+    * This method is used to display all the rows of a Dataframe.
+    * The rows are printed line by line in stdout.
+    * @throws BadArgumentException
     */
     public void fetchAll() throws BadArgumentException{
         fetchFromTo(0,nbRows());
@@ -232,7 +248,7 @@ public class Dataframe {
     * 
     * @param start the row where display is started
     * @param end  the row where .
-    * @exception BadArgumentException if nbLine is invalid 
+    * @exception BadArgumentException if start or/and end are not valid
     */
     protected void fetchFromTo(int start, int end) throws BadArgumentException{
         if(start < 0 || start > nbRows() )
@@ -284,6 +300,57 @@ public class Dataframe {
             throw new BadArgumentException("number of lines");
         fetchFromTo(nbRows()-nbline,nbRows());
     }
+    
+    
+   /**
+    * This method is get a new Dataframe that contains only a selection of rows
+    * 
+    * @param start index of the first row
+    * @param end  index of the last row
+    * @return a new Dataframe object that contains row between start and end
+    * @exception BadArgumentException if start or/and end are not valid
+    */
+    public Dataframe selectionRow(int start, int end) throws BadArgumentException{
+        if(start < 0 || start > nbRows() )
+            throw new BadArgumentException("start");
+        if(end < 0 || end > nbRows()) 
+            throw new BadArgumentException("end");
+        if(start > end) 
+            throw new BadArgumentException("start shoud be <= end");
+        
+        Dataframe df = new Dataframe();
+        for(Column col : this.dataframe)
+            df.insertColumn( new Column(col.getName(), col.getType()) );
+
+        for(int i=start; i<=end; i++){
+            String[] row = this.getRow(i).toArray(new String[0]);
+            df.insertRow(row);
+        }
+        return df;
+    }
+    
+   /**
+    * This method is get a new Dataframe that contains only a selection of columns
+    * 
+    * @param list
+    * @return a new Dataframe object that contains columns passed in parameter
+    * @exception BadArgumentException if the list of label is null, empty
+    * @throws LabelNotFoundException  if a the dataframe doesn't contains one of the labels in parameter
+    */
+    public Dataframe selectionColumns(List<String> list) throws BadArgumentException, LabelNotFoundException{
+        if(list == null)
+            throw new BadArgumentException("labels list is null");
+        if(list.isEmpty())
+            throw new BadArgumentException("labels list is empty");  
+        
+        Dataframe df = new Dataframe();
+        for(String label : list){
+            Column col = this.getColumn(label);
+            df.insertColumn(col);
+        }
+        df.nbRows = df.dataframe.get(0).getValues().size();
+        return df;
+    }
 
   /**
     * This method is used to insert a row in a Dataframed.
@@ -294,7 +361,7 @@ public class Dataframe {
     @SuppressWarnings("unchecked")
     public void insertRow(String[] row) throws BadArgumentException{
         if(row.length != this.labels.size())
-            throw new BadArgumentException("the row should contain "+this.labels.size()+" elements");
+            throw new BadArgumentException("the row should contains "+this.labels.size()+" elements");
         
         for(int i=0; i<this.labels.size(); i++){
             this.dataframe.get(i).addValue(row[i]);
@@ -307,11 +374,14 @@ public class Dataframe {
     * This method is used to insert a column in a Dataframed.
     * 
     * @param column the column to insert
-    * @throws BadArgumentException if column is null
+    * @throws BadArgumentException if column is null or column name already exists
     */
     public void insertColumn(Column column) throws BadArgumentException{
         if(column == null)
             throw new BadArgumentException("column should not be null");
+        if(containsLabel(column.getName()))
+            throw new BadArgumentException("column name already exists");
+        
         dataframe.add(column);
         labels.add(column.getName());
     }
@@ -320,7 +390,7 @@ public class Dataframe {
     * This method is used to remove a column from a Dataframed.
     * 
     * @param label the column to remove
-    * @throws LabelNotFoundException
+    * @throws LabelNotFoundException if dataframe if empty, or label is invalid
     */
     public void dropColumn(String label) throws LabelNotFoundException{
         if(dataframe.isEmpty())
@@ -336,7 +406,7 @@ public class Dataframe {
     * This method is used to remove a column from a Dataframed.
     * 
     * @param index the column to remove
-    * @throws BadArgumentException
+    * @throws BadArgumentException if the dataframe is empty of the index is invalidxs
     */
     public void dropColumn(int index) throws BadArgumentException{
         if(dataframe.isEmpty())
@@ -369,9 +439,9 @@ public class Dataframe {
     * The column should contains number values only (Integer, Double or Float).
     * 
     * @param label the name of the column
-    * @return a double 
-    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
-    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
+    * @return the sum of all values in the column 
+    * @throws LabelNotFoundException if label if not a valid column name
+    * @throws NotaNumberException if the column is not a column of numbers.
     */
     public double sum(String label) throws LabelNotFoundException, NotaNumberException {
         if(!containsLabel(label))
@@ -384,9 +454,9 @@ public class Dataframe {
     * The column should contains number values only (Integer, Double or Float).
     * 
     * @param label the name of the column
-    * @return a double 
-    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
-    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
+    * @return the min of all values in the column 
+    * @throws LabelNotFoundException if label if not a valid column name
+    * @throws NotaNumberException if the column is not a column of numbers.
     */
     public double min(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
@@ -399,9 +469,9 @@ public class Dataframe {
     * The column should contains number values only (Integer, Double or Float).
     * 
     * @param label the name of the column
-    * @return a double 
-    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
-    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
+    * @return the max of all values in the column 
+    * @throws LabelNotFoundException if label if not a valid column name
+    * @throws NotaNumberException if the column is not a column of numbers.
     */
     public double max(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
@@ -414,9 +484,9 @@ public class Dataframe {
     * The column should contains number values only (Integer, Double or Float).
     * 
     * @param label the name of the column
-    * @return a double 
-    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
-    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
+    * @return the average of all values in the column 
+    * @throws LabelNotFoundException if label if not a valid column name
+    * @throws NotaNumberException if the column is not a column of numbers.
     */
     public double mean(String label) throws LabelNotFoundException, NotaNumberException{
         if(!containsLabel(label))
@@ -424,13 +494,13 @@ public class Dataframe {
         return Mean(getColumn(label));
     }
     
-       /**
+   /**
     * This method is used to display stats of a Dataframe's column.
     * The column should contains number values only (Integer, Double or Float).
     * 
     * @param label the name of the column
-    * @throws fr.devops.Exceptions.LabelNotFoundException if label if not a valid column name
-    * @throws fr.devops.Exceptions.NotaNumberException if the column is not a column of numbers.
+    * @throws LabelNotFoundException if label if not a valid column name
+    * @throws NotaNumberException if the column is not a column of numbers.
     */
     public void printStats(String label) throws LabelNotFoundException, NotaNumberException{
         String[] str = { "Min", "Max", "Sum", "Mean"};
