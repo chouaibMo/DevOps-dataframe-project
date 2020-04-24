@@ -5,6 +5,7 @@
  */
 package fr.devops.main;
 
+import fr.devops.dataframe.Column;
 import fr.devops.dataframe.Dataframe;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,17 +44,24 @@ public class Main {
         
         /* Dataframe from csv file */
         
-        //Dataframe df2 = new Dataframe(args[0]);
-        //System.out.println("\t\t\t\tCSV FILE DATAFRAME : \n");
-        //df2.fetchAll();
-        //System.out.println("\n\t\t\t\tSTATS OF COLUMN : AGE\n");
-        //df2.printStats("Age");
-        //System.out.println("");
+        Dataframe df2 = new Dataframe(args[0]);
+        System.out.println("\t\t\t\tCSV FILE DATAFRAME : \n");
+        df2.fetchAll();
+        System.out.println("\n\t\t\tSTATS OF COLUMN : AGE\n");
+        df2.printStats("Age");
+        System.out.println("");
         
-        Dataframe d = df1.selectionRow(0, 2);
+        System.out.println("\t\t\tSELECTION BY ROWS : \n");
+        Dataframe d = df2.selectionRow(85,88);
         d.fetchAll();
-        System.out.println("\n");
-        d = d.selectionColumns(Arrays.asList("prenom","admis"));
+        System.out.println("");
+        
+        System.out.println("\t\t\tSELECTION BY COLUMNS : \n");
+        d = d.selectionColumns(Arrays.asList("Name", "Age", "Movie"));
         d.fetchAll();
+        System.out.println("");
+        
+
+        
     }
 }

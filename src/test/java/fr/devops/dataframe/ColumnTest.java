@@ -57,7 +57,22 @@ public class ColumnTest {
     
     @After
     public void tearDown() {
+        
+        
     } 
+    
+    /**
+     * Test of getName method, of class Column.
+     */
+    @Test
+    public void testConstructor() {
+        Column col = new Column("col1", "integer");
+        assertEquals(col.size(), 0);
+        assertEquals(Prenom.size(), 6);
+        col.addValue(10);
+        col.addValue(7);
+        assertEquals(col.size(), 2);     
+    }
 
     /**
      * Test of getName method, of class Column.

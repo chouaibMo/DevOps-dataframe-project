@@ -44,7 +44,15 @@ public class Column<T extends Object>{
         this.type = type;
         this.values = new ArrayList<>();
     }
-
+    
+    /**
+     * This method is used to get the size of the column
+     * @return the number of values the column contains
+     */
+    public int size(){
+        return this.values.size();
+    }
+    
     /**
      * This methode is used to get the name of a Column object
      * @return the name of a Column
@@ -97,4 +105,5 @@ public class Column<T extends Object>{
     public void addValue(T val){
         this.values.add(val);
     }
+    
 }

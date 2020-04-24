@@ -102,9 +102,9 @@ public class Dataframe {
             for (int i=0; i<row.length;i++) 
                 dataframe.get(i).getValues().add(row[i]);
         
-        nbRows = dataframe.get(0).getValues().size();
+        nbRows = dataframe.get(0).size();
         for(Column<?> col : dataframe)
-            if(nbRows != col.getValues().size() )
+            if(nbRows != col.size() )
                 throw new BadArgumentException("columns in csv file should have the same size");
     }
  
@@ -188,7 +188,7 @@ public class Dataframe {
     * @return the row numb
     */
     public List<String> getRow(int index) throws BadArgumentException{
-        if(index < 0 || index > nbRows() )
+        if(index < 0 || index >= nbRows() )
             throw new BadArgumentException("index");
         
         ArrayList<String> row = new ArrayList<>();
@@ -311,9 +311,9 @@ public class Dataframe {
     * @exception BadArgumentException if start or/and end are not valid
     */
     public Dataframe selectionRow(int start, int end) throws BadArgumentException{
-        if(start < 0 || start > nbRows() )
+        if(start < 0 || start >= nbRows() )
             throw new BadArgumentException("start");
-        if(end < 0 || end > nbRows()) 
+        if(end < 0 || end >= nbRows()) 
             throw new BadArgumentException("end");
         if(start > end) 
             throw new BadArgumentException("start shoud be <= end");
@@ -348,7 +348,7 @@ public class Dataframe {
             Column col = this.getColumn(label);
             df.insertColumn(col);
         }
-        df.nbRows = df.dataframe.get(0).getValues().size();
+        df.nbRows = df.dataframe.get(0).size();
         return df;
     }
 

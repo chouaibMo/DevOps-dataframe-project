@@ -369,15 +369,6 @@ public class DataframeTest {
      */
     @Test (expected = BadArgumentException.class)
     public void testFetchFromToException5() throws Exception {
-        students.fetchFromTo(8,3);
-        students.fetchFromTo(3,-1);
-    }
-    
-   /**
-     * Test of fetchFromTo method, of class Dataframe.
-     */
-    @Test (expected = BadArgumentException.class)
-    public void testFetchFromToException6() throws Exception {
         students.fetchFromTo(3,-1);
     }
 
@@ -485,6 +476,14 @@ public class DataframeTest {
         emptyDf.insertColumn(col1);
     }
     
+    /**
+     * Test of insertColumn method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testInsertColumnBadArgumentException2() throws Exception {
+        Column col1 = new Column("prenom", "String");
+        students.insertColumn(col1);
+    }
 
     /**
      * Test of dropColumn method, of class Dataframe.
@@ -775,4 +774,122 @@ public class DataframeTest {
     public void teststatsNotANumberException() throws Exception {
         students.printStats("prenom");
     }
+
+    /**
+     * Test of setLabels method, of class Dataframe.
+     */
+    @Test
+    public void testSetLabels() {
+        emptyDf.setLabels(students.getLabels());
+        assertEquals(students.getLabels(), emptyDf.getLabels());
+    }
+
+    /**
+     * Test of getRow method, of class Dataframe.
+     */
+    @Test
+    public void testGetRow() throws Exception {
+        List<String> row1 = new ArrayList<String>(Arrays.asList("true", "Emma", "113090", "14.9"));
+        List<String> row2 = students.getRow(3);
+        assertEquals(row1, row2);
+        
+    }
+    
+   /**
+     * Test of getRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testGetRowBadArgumentException1() throws Exception {
+        students.getRow(-1);
+    }
+    
+    /**
+     * Test of getRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testGetRowBadArgumentException2() throws Exception {
+        students.getRow(6);
+    }
+
+    /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test
+    public void testSelectionRow() throws Exception {
+        Dataframe d = students.selectionRow(0, 2);
+        assertEquals(3, d.nbRows());
+        assertEquals(4, d.nbColumns());
+    }
+    
+    /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testSelectionRowException1() throws Exception {
+        students.selectionRow(-1,4);
+    }
+    
+    /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testSelectionRowException2() throws Exception {
+        oscars.selectionRow(1,89);
+    }
+    
+    /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testSelectionRowException3() throws Exception {
+        students.selectionRow(5,3);
+    }
+    
+   /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testSelectionRowException4() throws Exception {
+        students.selectionRow(8,3);
+    }
+    
+   /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testSelectionRowException5() throws Exception {
+        students.selectionRow(3,-1);
+    }
+    
+    /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test 
+    public void testSelectionColumns() throws Exception {
+        List<String> list = new ArrayList<>(Arrays.asList("Name","Age"));
+        Dataframe d = oscars.selectionColumns(list);
+        assertEquals(2, d.nbColumns());
+        assertEquals(89, d.nbRows());  
+        assertTrue(d.containsLabel("Name"));
+        assertTrue(d.containsLabel("Age"));
+    }
+    
+    /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testSelectionColumnsException1() throws Exception {
+        students.selectionColumns(null);
+    }
+    
+    /**
+     * Test of selectionRow method, of class Dataframe.
+     */
+    @Test (expected = BadArgumentException.class)
+    public void testSelectionColumnsException2() throws Exception {
+        List<String> list = new ArrayList<>();
+        students.selectionColumns(list);
+    }
+ 
 }
+
