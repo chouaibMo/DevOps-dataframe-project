@@ -78,6 +78,7 @@ La fonction printStats permet d'afficher le resultat de ces fonctions sous forme
 -  **Travis CI**  : Pour l'integration continue
 -  **JaCoCo**     : Pour évaluer la couverture du code
 -  **CodeCov**    : Permet d'avoir un badge sur GitHub avec le pourcentage de couverture
+-  **Codacy**     : Pour évaluer la qualité du code
 -  **DockerHub**  : Comme service de dépot pour notre image Docker
 
 
