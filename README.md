@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.com/chouaibMo/DevOpsProject.svg?branch=master)](https://travis-ci.com/chouaibMo/DevOpsProject)
 [![codecov](https://codecov.io/gh/chouaibMo/DevOpsProject/branch/master/graph/badge.svg)](https://codecov.io/gh/chouaibMo/DevOpsProject)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8536cb830ec64997817ffeb2b58e79e2)](https://www.codacy.com/manual/chouaibMo/DevOpsProject?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chouaibMo/DevOpsProject&amp;utm_campaign=Badge_Grade)
 
 
 
-## Préambule 
-
+## Préambule
 Les Dataframes sont des tableaux en deux dimensions où chaque colonne est identifiée par un label et chaque ligne par un index. Chaque colonne stocke des données d’un seul type. Cependant deux colonnes différentes peuvent stocker des types différents.  
 Pandas est une des bibliotèques les plus populaires (pour langage Python). Elle permet de traiter de grandes quantités de données simplement et efficacement (plus d'informations sur https://pandas.pydata.org).   
 L’objectif de ce projet est d'implémenter une sous-partie des fonctionnalitées offertes par Pandas en Java.
@@ -58,8 +58,8 @@ Il existe 4 manières différentes pour afficher le contenu d'un Dataframe :
 Il existe 2 manières différentes pour réaliser une selection dans un Dataframe.
 Le résultat de la sélection est un nouveau Dataframe : 
 
-- 
-- 
+- Selection d'un sous ensemble de lignes  : `selectionRow(int,int)`
+- Selection d'un sous ensemble de colonnes: `selectionColumn(List<String>)`
 
 ### 5- Fonctions statistiques sur un Dataframe
 Il existe 4 fonctions statistiques, applicables sur les colonnes numériques d'un Dataframe (Integer, Double ou Float). Ces fonctions prennent en parametre le nom (label) d'une colonne : 
@@ -89,7 +89,6 @@ De plus, 2 dépendances maven sont utilisées :
 On utilise également le plugin maven `maven-shade-plugin` pour génerer un jar executable pour lancer le main de démontration (pour plus d'infos http://maven.apache.org/plugins/maven-shade-plugin/)
 
 ## Docker image - Docker Hub
-
 -
 -
 
