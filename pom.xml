@@ -65,7 +65,7 @@
                           <mainClass>fr.devops.main.Main</mainClass>
                         </transformer>
                       </transformers>
-                      <finalName>DataframeMain</finalName>
+                      <finalName>DataframeDemo</finalName>
                     </configuration>
                   </execution>
                 </executions>
