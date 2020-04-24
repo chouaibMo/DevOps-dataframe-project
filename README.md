@@ -88,12 +88,21 @@ De plus, 2 dépendances maven sont utilisées :
 
 On utilise également le plugin maven `maven-shade-plugin` pour génerer un jar executable pour lancer le main de démontration (pour plus d'infos http://maven.apache.org/plugins/maven-shade-plugin/)
 
-## Docker image - Docker Hub
--
--
+## Docker - DockerHub
+Une pipeline de livraison continue est mise en place grace a l'outils **Travis CI**. Cela consiste à mettre a jour une image Docker sur le DockerHub, automatiquement à chaque commit sur GitHub. La seule contrainte qui existe, est que tout les tests unitaires passent avec succès.   
+L'execution de l'image docker déroule une serie de scénarios de démonstrations d'un ensemble de fonctionnalitées que la bibliotèque propose.   
+Pour visiter le dépot dockerHub associé a ce projet : [chouaibmo](https://hub.docker.com/u/chouaibmo).   
+
+Pour récuperer l'image docker :
+```sh
+$ docker pull chouaibmo/dataframe:latest
+```
+Pour démarrer un conteneur correspondant à cette image docker :
+```sh
+$ docker run -it --rm chouaibmo/dataframe
+```
 
 ## Execution
-
 Pour lancer les tests unitaire, executer la commande suivante à la racine du projet :
 ```sh
 $ mvn test
