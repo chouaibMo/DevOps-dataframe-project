@@ -67,7 +67,7 @@ public class StatisticsTest {
    /**
      * Test of Min method, of class Statistics.
      */
-    @Test (expected = RuntimeException.class)
+    @Test (expected = Exception.class)
     public void testConstructor() throws Exception {
         Statistics stat = new Statistics();
     }
