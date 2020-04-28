@@ -10,7 +10,7 @@ script:
  
        
 after_success:
-  - bash <(curl -s --data-binary @codecov.yml https://codecov.io/validate)
+  - bash <(curl -s https://codecov.io/bash)
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t dataframe:latest .
   - docker tag dataframe chouaibmo/dataframe:latest

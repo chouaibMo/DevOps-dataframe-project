@@ -15,7 +15,7 @@ import fr.devops.dataframe.Column;
 public final class Statistics {
     
     Statistics() throws Exception{
-        throw new Exception("this class should'nt be instantiated.");
+        throw new UnsupportedOperationException("this class should'nt be instantiated.");
     }
     
    /**

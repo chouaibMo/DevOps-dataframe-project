@@ -127,7 +127,7 @@ $ mvn javadoc:javadoc
 ```
 ## FeedBack
 
-Ce project a été une occasion de mettre en oeuvre toutes les connaissances acquises durant ce semestres, et de se familiariser encore plus avec les outils étudiés dans un contexte plus technique que les TPs. C'était aussi l'occasion de découvrir d'autres outils (codacy, codecov ...) ainsi que de dependances et plugins maven (tel que maven-shade qui permet de générer un ou plusieurs jar executables automatiquement).
+Ce project a été une occasion de mettre en oeuvre toutes les connaissances acquises durant ce semestres, et de se familiariser encore plus avec les outils étudiés dans un contexte plus technique que les TPs. C'était aussi l'occasion de découvrir d'autres outils (codacy, codecov ...) ainsi que de dependances et plugins maven (tel que maven-shade qui permet de générer un ou plusieurs jar executables automatiquement).     
 La mise en place des tests et de la pipeline d'intégration, dans les premières phases du projets, permet d'avancer très rapidement, et d'avoir une version stable et fonctionnelle après chaque fonctionnalité implémentée.   
 
-- **REMARQUE :** le badge codecov sur le depot du projet n'affiche pas 100% en couverture de code car l'outils n'ignore pas la classe main. Cela dit, JaCoCo évalue bel et bien la couverture à 100%.
+**REMARQUE :** le badge codecov sur le depot du projet n'affiche que 88% en couverture de code car l'outils n'ignore pas la classe main. Cela dit, JaCoCo évalue bel et bien la couverture à 100%.
