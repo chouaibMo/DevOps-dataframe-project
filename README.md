@@ -12,7 +12,7 @@ Pandas est une des bibliotèques les plus populaires (pour langage Python). Elle
 L’objectif de ce projet est d'implémenter une sous-partie des fonctionnalitées offertes par Pandas en Java.
 
 ## Documentation : Javadoc
-La documentation java de cette bibliothèque peut facilement etre génerée en executant la commande suivante à la racine du projet : 
+La documentation java de cette bibliothèque peut etre génerée en executant la commande suivante à la racine du projet : 
 ```sh
 mvn javadoc:javadoc
 ```
@@ -112,12 +112,12 @@ Pour lancer les tests unitaire et génerer le jar, executer la commande suivante
 ```sh
 $ mvn package
 ```
-Pour lancer le main de demonstration, il faut choisir un fichier csv dans le répertoire `src/main/ressources/` (file.csv par exemple) et executer ensuite une des commandes suivantes à la racine du projet :
+Pour lancer le main de demonstration, assurez-vous que le fichier **oscars.csv** est dans le répertoire `src/main/ressources/`, executer ensuite une des commandes suivantes à la racine du projet :
 ```sh
-$ mvn exec:java -Dexec.args="src/main/ressources/file.csv"
+$ mvn exec:java -Dexec.args="src/main/ressources/oscars.csv"
 ```
 ```sh
-$ java -jar target/DataframeMain.jar src/main/ressources/file.csv
+$ java -jar target/DataframeMain.jar src/main/ressources/oscars.csv
 ```
 
 Pour génerer la javadoc, executer la commande suivante à la racine du projet :
@@ -127,5 +127,7 @@ $ mvn javadoc:javadoc
 ```
 ## FeedBack
 
--
--
+Ce project a été une occasion de mettre en oeuvre toutes les connaissances acquises durant ce semestres, et de se familiariser encore plus avec les outils étudiés dans un contexte plus technique que les TPs. C'était aussi l'occasion de découvrir d'autres outils (codacy, codecov ...) ainsi que de dependances et plugins maven (tel que maven-shade qui permet de générer un ou plusieurs jar executables automatiquement).
+La mise en place des tests et de la pipeline d'intégration, dans les premières phases du projets, permet d'avancer très rapidement, et d'avoir une version stable et fonctionnelle après chaque fonctionnalité implémentée.   
+
+- **REMARQUE :** le badge codecov sur le depot du projet n'affiche pas 100% en couverture de code car l'outils n'ignore pas la classe main. Cela dit, JaCoCo évalue bel et bien la couverture à 100%.
