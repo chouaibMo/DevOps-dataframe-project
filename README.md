@@ -1,8 +1,8 @@
  <h1 align=center> DevOps Project : Dataframe</h1>
 
 [![Build Status](https://travis-ci.com/chouaibMo/DevOpsProject.svg?branch=master)](https://travis-ci.com/chouaibMo/DevOpsProject)
-[![codecov](https://codecov.io/gh/chouaibMo/DevOpsProject/branch/master/graph/badge.svg)](https://codecov.io/gh/chouaibMo/DevOpsProject)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1fdc7e907c8c4640b11c5b4e96ac0496)](https://www.codacy.com/manual/chouaibMo/DevOpsProject?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chouaibMo/DevOpsProject&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/chouaibMo/DevOpsProject/branch/master/graph/badge.svg)](https://codecov.io/gh/chouaibMo/DevOpsProject)
 
 
 
@@ -117,7 +117,7 @@ Pour lancer le main de demonstration, assurez-vous que le fichier **oscars.csv**
 $ mvn exec:java -Dexec.args="src/main/ressources/oscars.csv"
 ```
 ```sh
-$ java -jar target/DataframeMain.jar src/main/ressources/oscars.csv
+$ java -jar target/DataframeDemo.jar src/main/ressources/oscars.csv
 ```
 
 Pour génerer la javadoc, executer la commande suivante à la racine du projet :
