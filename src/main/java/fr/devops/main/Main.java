@@ -30,32 +30,48 @@ public class Main {
         dataset.put("admis", estAdmis);
         dataset.put("moyenne", moyenne);
         
-        /* Dataframe from data structure */
-
+    /****************** Dataframe from data structure ******************/
+        
+        //Creation of the dataframe :
         Dataframe df1 = new Dataframe(dataset);
         System.out.println("\n\t\t\t\tSTUDENTS DATAFRAME : \n");
+        
+        //Displaying all the dataframe :
         df1.fetchAll();
         System.out.println("\n\t\t\t\tSTATS OF COLUMN : MOYENNE\n");
+        
+        //Displaying stats of the colonne moyenne :
         df1.printStats("moyenne");
         System.out.println("\n\n");
         
         
-        /* Dataframe from csv file */
+    /****************** Dataframe from csv file (oscars) ****************/
         
+        //Creation of the dataframe :
         Dataframe df2 = new Dataframe(args[0]);
-        System.out.println("\t\t\t\tCSV FILE DATAFRAME : \n");
+        System.out.println("\t\t\t\t OSCARS DATAFRAME : \n");
+        
+        //Displaying all the dataframe :
         df2.fetchAll();
         System.out.println("\n\t\t\tSTATS OF COLUMN : AGE\n");
+        
+        //Displaying stats of the column age
         df2.printStats("Age");
         System.out.println("");
-        
         System.out.println("\t\t\tSELECTION BY ROWS : \n");
+        
+        //New dataframe from a selection by row in df2 :
         Dataframe d = df2.selectionRow(85,88);
+        
+        //Displaying the new dataframe :
         d.fetchAll();
         System.out.println("");
-        
         System.out.println("\t\t\tSELECTION BY COLUMNS : \n");
+        
+        //New dataframe from selection by columns (3 columns selected) :
         d = d.selectionColumns(Arrays.asList("Name", "Age", "Movie"));
+        
+        //Displaying the new dataframe :
         d.fetchAll();
         System.out.println("");
         

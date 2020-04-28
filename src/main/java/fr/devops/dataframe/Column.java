@@ -12,7 +12,7 @@ import java.util.List;
  * This class represents a Column object
  * 
  * @author chouaib
- * @param <T>
+ * @param <T> a type that extends Object
  */
 @SuppressWarnings("unchecked")
 public class Column<T extends Object>{

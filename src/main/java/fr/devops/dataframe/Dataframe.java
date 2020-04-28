@@ -181,11 +181,11 @@ public class Dataframe {
     }  
     
    /**
-    * returns the row associated to the index in parameter.
-    * index should be equals or greater than 0 and less than Dataframe's size.
+    * returns the row associated to the index in parameter.index should be equals or greater than 0 and less than Dataframe's size.
     * 
     * @param index the row index
     * @return the row numb
+    * @throws BadArgumentException if index is invalid
     */
     public List<String> getRow(int index) throws BadArgumentException{
         if(index < 0 || index >= nbRows() )
@@ -236,7 +236,7 @@ public class Dataframe {
   /**
     * This method is used to display all the rows of a Dataframe.
     * The rows are printed line by line in stdout.
-    * @throws BadArgumentException
+    * @throws BadArgumentException because of the ferchFromTo method
     */
     public void fetchAll() throws BadArgumentException{
         fetchFromTo(0,nbRows());
@@ -332,7 +332,7 @@ public class Dataframe {
    /**
     * This method is get a new Dataframe that contains only a selection of columns
     * 
-    * @param list
+    * @param list a list of labels of columns to select
     * @return a new Dataframe object that contains columns passed in parameter
     * @exception BadArgumentException if the list of label is null, empty
     * @throws LabelNotFoundException  if a the dataframe doesn't contains one of the labels in parameter
@@ -356,7 +356,7 @@ public class Dataframe {
     * This method is used to insert a row in a Dataframed.
     * 
     * @param row the row to insert
-    * @throws BadArgumentException
+    * @throws BadArgumentException if the row size is not equal to the columns number
     */
     @SuppressWarnings("unchecked")
     public void insertRow(String[] row) throws BadArgumentException{

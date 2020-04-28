@@ -19,10 +19,10 @@ public final class Statistics {
     }
     
    /**
-    * This method is used to compute the min value of a column.
-    * The column should contains number values only (Integer, Double or Float).
+    * This method is used to compute the min value of a column.The column should contains number values only (Integer, Double or Float).
     * 
     * @param column column to compute it's min
+    * @return the minimum value of the column
     * @throws NotaNumberException if the column is not a column of numbers.
     */
     public static double Min(Column column) throws NotaNumberException{
@@ -41,10 +41,10 @@ public final class Statistics {
       
     
    /**
-    * This method is used to compute the max value of a column.
-    * The column should contains number values only (Integer, Double or Float).
+    * This method is used to compute the max value of a column.The column should contains number values only (Integer, Double or Float).
     * 
     * @param column column to compute it's max
+    * @return the maximum value of the column
     * @throws NotaNumberException if the column is not a column of numbers.
     */
     public static double Max(Column column) throws NotaNumberException{
@@ -63,10 +63,10 @@ public final class Statistics {
       
     
    /**
-    * This method is used to compute the sum value of a column.
-    * The column should contains number values only (Integer, Double or Float).
+    * This method is used to compute the sum value of a column.The column should contains number values only (Integer, Double or Float).
     * 
     * @param column column to compute it's sum
+    * @return the sum of column values
     * @throws NotaNumberException if the column is not a column of numbers.
     */
     public static double Sum(Column column) throws NotaNumberException{
@@ -84,10 +84,10 @@ public final class Statistics {
       
     
    /**
-    * This method is used to compute the average value of a column.
-    * The column should contains number values only (Integer, Double or Float).
+    * This method is used to compute the average value of a column.The column should contains number values only (Integer, Double or Float).
     * 
     * @param column column to compute it's average
+    * @return the average of column values
     * @throws NotaNumberException if the column is not a column of numbers.
     */
     public static double Mean(Column column) throws NotaNumberException {
