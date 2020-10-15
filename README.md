@@ -1,8 +1,8 @@
  <h1 align=center> DevOps Project : Dataframe</h1>
 
-[![Build Status](https://travis-ci.com/chouaibMo/DevOpsProject.svg?branch=master)](https://travis-ci.com/chouaibMo/DevOpsProject)
+[![Build Status](https://travis-ci.com/chouaibMo/DevOps-dataframe-project.svg?branch=master)](https://travis-ci.com/chouaibMo/DevOps-dataframe-project)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1fdc7e907c8c4640b11c5b4e96ac0496)](https://www.codacy.com/manual/chouaibMo/DevOpsProject?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chouaibMo/DevOpsProject&amp;utm_campaign=Badge_Grade)
-[![codecov](https://codecov.io/gh/chouaibMo/DevOpsProject/branch/master/graph/badge.svg)](https://codecov.io/gh/chouaibMo/DevOpsProject)
+[![codecov](https://codecov.io/gh/chouaibMo/DevOps-dataframe-project/branch/master/graph/badge.svg)](https://codecov.io/gh/chouaibMo/DevOps-dataframe-project)
 
 
 
