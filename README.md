@@ -1,10 +1,19 @@
  <h1 align=center> DevOps Project : Dataframe</h1>
 
+
+
 [![Build Status](https://travis-ci.com/chouaibMo/DevOps-dataframe-project.svg?branch=master)](https://travis-ci.com/chouaibMo/DevOps-dataframe-project)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1fdc7e907c8c4640b11c5b4e96ac0496)](https://www.codacy.com/manual/chouaibMo/DevOpsProject?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=chouaibMo/DevOpsProject&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/chouaibMo/DevOps-dataframe-project/branch/master/graph/badge.svg)](https://codecov.io/gh/chouaibMo/DevOps-dataframe-project)
 
 
+
+<p align=center>
+  <img src="https://image.flaticon.com/icons/png/512/226/226777.png" width="150" height="150"/>
+  <img src="https://avatars.githubusercontent.com/u/8226205?s=400&v=4" width="130" height="130"/>
+    <img src="https://koenig-media.raywenderlich.com/uploads/2015/07/Featured4.png" width="140" height="140"/>
+  <img src="https://image.flaticon.com/icons/png/512/919/919853.png" width="130" height="130"/>
+</p>
 
 ## Préambule
 Les Dataframes sont des tableaux en deux dimensions où chaque colonne est identifiée par un label et chaque ligne par un index. Chaque colonne stocke des données d’un seul type. Cependant deux colonnes différentes peuvent stocker des types différents.  
